@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Player() {
+function Player():JSX.Element {
   return (
     <div>
       Hello, World!! Now with Rollup

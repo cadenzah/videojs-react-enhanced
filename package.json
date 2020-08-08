@@ -10,8 +10,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:watch": "rollup -c --watch"
+    "test:watch": "npx jest  --watch",
+    "build:watch": "npx rollup -c --watch"
   },
   "repository": {
     "type": "git",
@@ -33,11 +33,13 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "@testing-library/jest-dom": "^5.11.2",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^12.1.1",
+    "@types/jest": "^26.0.9",
     "@types/react": "^16.9.45",
-    "babel-loader": "^8.1.0",
-    "clean-webpack-plugin": "^3.0.0",
-    "core-js": "^3.6.5",
-    "regenerator-runtime": "^0.13.7",
+    "jest": "^26.2.2",
+    "react-dom": "^16.13.1",
     "rollup": "^2.23.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-cleaner": "^1.0.0",
@@ -45,8 +47,8 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.3",
     "rollup-plugin-typescript2": "^0.27.2",
-    "typescript": "^3.9.7",
-    "url-loader": "^4.1.0"
+    "ts-jest": "^26.1.4",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "react": "^16.13.1",
