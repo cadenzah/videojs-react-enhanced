@@ -1,0 +1,27 @@
+{
+  "name": "videojs-react-enhanced",
+  "version": "0.1.0",
+  "description": "React.js wrapper component for Video.js player",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cadenzah/videojs-react-enhanced.git"
+  },
+  "keywords": [
+    "videojs",
+    "reactjs"
+  ],
+  "author": "cadenzah <cadenzah93@gmail.com> (https://github.com/cadenzah)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cadenzah/videojs-react-enhanced/issues"
+  },
+  "homepage": "https://github.com/cadenzah/videojs-react-enhanced#readme"
+}
