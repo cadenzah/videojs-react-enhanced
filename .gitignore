@@ -3,3 +3,6 @@ node_modules/
 
 # build related files
 dist/
+
+# etc
+.DS_Store
