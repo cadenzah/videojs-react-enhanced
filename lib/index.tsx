@@ -3,7 +3,9 @@ import React from 'react';
 function Player() {
   return (
     <div>
-      Hello, World!
+      Hello, World!! Now with Rollup
     </div>
   )
 }
+
+export default Player
