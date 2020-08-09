@@ -2,13 +2,16 @@
   "name": "videojs-react-enhanced",
   "version": "0.1.0",
   "description": "React.js wrapper component for Video.js player",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnest:main": "dist/index.es.js",
   "directories": {
     "lib": "lib",
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:watch": "npx jest  --watch",
+    "build:watch": "npx rollup -c --watch"
   },
   "repository": {
     "type": "git",
@@ -23,5 +26,32 @@
   "bugs": {
     "url": "https://github.com/cadenzah/videojs-react-enhanced/issues"
   },
-  "homepage": "https://github.com/cadenzah/videojs-react-enhanced#readme"
+  "homepage": "https://github.com/cadenzah/videojs-react-enhanced#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@testing-library/jest-dom": "^5.11.2",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^12.1.1",
+    "@types/jest": "^26.0.9",
+    "@types/react": "^16.9.45",
+    "jest": "^26.2.2",
+    "react-dom": "^16.13.1",
+    "rollup": "^2.23.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-cleaner": "^1.0.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.3",
+    "rollup-plugin-typescript2": "^0.27.2",
+    "ts-jest": "^26.1.4",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "video.js": "^7.8.4"
+  }
 }

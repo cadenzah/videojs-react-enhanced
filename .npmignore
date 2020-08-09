@@ -1,0 +1,25 @@
+# npm
+node_modules/
+
+# dev
+lib
+rollup.config.js
+tsconfig.json
+.eslintrc.js
+
+# test
+tests
+jest.config.js
+
+# GIT
+.git
+.gitignore
+
+# GITHUB
+.github
+
+# DOCUMENTATION
+README.md
+
+# etc
+.DS_Store
