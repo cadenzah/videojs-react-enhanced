@@ -3,11 +3,13 @@ node_modules/
 
 # dev
 lib
-tests
 rollup.config.js
 tsconfig.json
-jest.config.js
 .eslintrc.js
+
+# test
+tests
+jest.config.js
 
 # GIT
 .git
@@ -18,3 +20,6 @@ jest.config.js
 
 # DOCUMENTATION
 README.md
+
+# etc
+.DS_Store
