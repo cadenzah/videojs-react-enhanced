@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, RenderResult } from '@testing-library/react';
+import { render, fireEvent, RenderResult } from '@testing-library/react';
 import Player from '../lib';
 
 let component: RenderResult;
@@ -45,6 +45,42 @@ describe('Rendered properly', () => {
     };
     
     component = render(<Player {...playerProps} />);
+  });
+
+  // ## functionality check - component에 있는 버튼들을 눌렀을 때
+  // 이것이 video.js의 기능을 사용하도록 제대로 메서드들이 구현되어잇는지
+  it('When the play button is pressed, the video content starts', () => {
+    
+    // render된 후, 재생 버튼을 눌렀을 때
+    // (1) 1초가 지나가고 나면 재생 시간이 0초가 아니어야 한다
+    // (2) 버튼도 일시정지 버튼으로 달라져있어야 한다
+    component = render(<Player />);
+
+    
+  });
+
+  it('When the pause button is pressed, the video content stops', () => {
+    // render된 후, 재생 버튼을 누른다
+    // 1초가 지난 뒤 일시정지 버튼을 누른다
+    // (1) 1초가 지나가고 나면 재생 시간이 1초가 아니어야 한다
+    // (2) 버튼도 일시정지 버튼으로 달라져있어야 한다
+    component = render(<Player />);
+  });
+
+  it('When an arbitrary point on progress bar is pressed, the video content jumps to that point', () => {
+    // render한 후,
+    // navigation bar 상의 아무 지점을 누른다
+      // 프로그레스 바의 전체 길이 중 특정 지점을 누르게끔 코드로 제공 ; 특정 지점의 값은 보존
+    // (1) 그러고 난 뒤, 재생 시간이 특정 지점의 시간으로 달라져있어야 한다
+    // (2) 프로그레스 바 상의 Indicator 또한 해당 지점으로 이동해있어야 한다
+  });
+
+  it('When an arbitrary point on volume bar is pressed, the volume changes to that point', () => {
+    // render한 후,
+    // 볼륨 바의 아무 지점을 누른다
+      // 볼륨 바의 전체 길이 중 특정 지점을 누르게끔 코드로 제공 ; 특정 지점의 값은 보존
+    // (1) 그러고 난 뒤, 볼륨값이 특정 지점의 값으로 달라져있어야 한다
+    // (2) 볼륨 바 상의 Indicator 또한 해당 지점으로 이동해있어야 한다
   });
 
   it('Applies plugin if provided', () => {
