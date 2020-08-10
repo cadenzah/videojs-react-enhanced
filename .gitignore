@@ -5,5 +5,8 @@ node_modules/
 dist/
 build/
 
+# test results
+coverage/
+
 # etc
 .DS_Store

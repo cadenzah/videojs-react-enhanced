@@ -10,7 +10,7 @@
     "test": "test"
   },
   "scripts": {
-    "test:watch": "npx jest  --watch",
+    "test:watch": "npx jest  --watch --coverage",
     "build:watch": "npx rollup -c --watch"
   },
   "repository": {

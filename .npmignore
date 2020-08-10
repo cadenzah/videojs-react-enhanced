@@ -10,6 +10,7 @@ tsconfig.json
 # test
 tests
 jest.config.js
+coverage/
 
 # GIT
 .git
