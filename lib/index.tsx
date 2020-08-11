@@ -2,10 +2,8 @@ import React from 'react';
 
 function Player():JSX.Element {
   return (
-    <div>
-      Hello, World!! Now with Rollup
-    </div>
-  )
+    <div />
+  );
 }
 
 export default Player

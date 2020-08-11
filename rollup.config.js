@@ -1,8 +1,8 @@
 import typescript from "rollup-plugin-typescript2";
-import commonjs from "rollup-plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
-import resolve from "rollup-plugin-node-resolve";
-import babel from 'rollup-plugin-babel';
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import babel from '@rollup/plugin-babel';
 import cleanup from 'rollup-plugin-cleaner';
 
 import pkg from "./package.json";
@@ -25,7 +25,7 @@ export default {
   plugins: [
     cleanup({
       targets: [
-        './dist/'
+        './dist/',
       ]
     }),
     external(),
@@ -33,20 +33,15 @@ export default {
     typescript({
       rollupCommonJSResolveHack: true,
       exclude: "**/__tests__/**",
-      clean: true
+      clean: true,
     }),
     commonjs({
       include: ["node_modules/**"],
-      namedExports: {
-        "node_modules/react/react.js": [
-          "Children",
-          "Component",
-          "PropTypes",
-          "createElement"
-        ],
-        "node_modules/react-dom/index.js": ["render"]
-      }
     }),
-    babel({ extensions, include: ['lib/**/*'], runtimeHelpers: true })
+    babel({
+      extensions,
+      include: ['lib/**/*'],
+      babelHelpers: 'runtime',
+    }),
   ]
 };
