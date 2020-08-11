@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
 
 // interface PlayerOptionsFromUser extends videojs.PlayerOptions {
 //   autoplay?: boolean | 'muted' | 'play' | 'any';
@@ -23,12 +24,23 @@ interface IPlayerOptions extends videojs.PlayerOptions {
 
 interface PlayerProps {
   playerOptions: IPlayerOptions;
-  sourceObject: videojs.Tech.SourceObject;
+  // Custom Event Handlers
+  onProgress?: () => void;
+  onPlay?: () => void;
+  onPause?: () => void;
+  onWaiting?: () => void;
+  onTimeUpdate?: () => void;
+  onSeeking?: () => void;
+  onSeeked?: () => void;
   onEnded?: () => void;
+  onError?: () => void;
+  onLoadedData?: () => void;
+  onLoadedMetadata?: () => void;
 }
 
-function randomGenerator(): string {
-  return `${new Date()}`
+// props로 전달된 각 이벤트 리스너들을 대응되는 이벤트가 발생시 실행되도록 초기화
+function initializeEventListeners(props: PlayerProps): void {
+
 }
 
 function Player(props: PlayerProps):JSX.Element {
