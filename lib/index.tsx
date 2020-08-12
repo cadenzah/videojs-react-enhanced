@@ -3,18 +3,6 @@ import PropTypes from 'prop-types';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 
-// interface PlayerOptionsFromUser extends videojs.PlayerOptions {
-//   autoplay?: boolean | 'muted' | 'play' | 'any';
-//   controls?: boolean;
-//   loop?: boolean;  // 어디에도 없음
-//   muted?: boolean; // 어디에도 없음
-//   src: string;
-//   poster?: string; // Player 인터페이스
-//   preload: 'auto' | 'metadata' | 'none';
-//   width: string | number;
-//   height: string | number;
-// }
-
 interface IPlayerOptions {
   autoplay?: 'muted' | 'play' | 'any';
   controls?: boolean;
@@ -129,6 +117,17 @@ Player.propTypes = {
     notSupportedMessage: PropTypes.string,
     playbackRates: PropTypes.arrayOf(PropTypes.number),
   }),
+  onProgress: PropTypes.func,
+  onPlay: PropTypes.func,
+  onPause: PropTypes.func,
+  onWaiting: PropTypes.func,
+  onTimeUpdate: PropTypes.func,
+  onSeeking: PropTypes.func,
+  onSeeked: PropTypes.func,
+  onEnded: PropTypes.func,
+  onError: PropTypes.func,
+  onLoadedData: PropTypes.func,
+  onLoadedMetadata: PropTypes.func,
 }
 
 export default Player
