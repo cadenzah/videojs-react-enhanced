@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 
@@ -15,15 +16,22 @@ import 'video.js/dist/video-js.css';
 // }
 
 interface IPlayerOptions extends videojs.PlayerOptions {
-  poster?: string;
-  loop?: boolean;
-  muted?: boolean;
   preload?: 'auto' | 'metadata' | 'none';
-  // autoplay?: boolean | 'muted' | 'play' | 'any';
+  autoplay?: 'muted' | 'play' | 'any';
 }
+
+interface IResources extends videojs.PlayerOptions {
+  sources?: Array<videojs.Tech.SourceObject>;
+  poster?: string;
+}
+
+// interface IVideojsOptions extends videojs.PlayerOptions
 
 interface PlayerProps {
   playerOptions: IPlayerOptions;
+  resources: IResources;
+  // videojsOptions: IVideojsOptions;
+
   // Custom Event Handlers
   onProgress?: () => void;
   onPlay?: () => void;
@@ -44,7 +52,10 @@ function initializeEventListeners(props: PlayerProps): void {
 }
 
 function Player(props: PlayerProps):JSX.Element {
-  const playerOptions: IPlayerOptions = props.playerOptions;
+  const playerOptions: videojs.PlayerOptions = {
+    ...props.playerOptions,
+    ...props.resources,
+  };
   let playerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -71,6 +82,29 @@ function Player(props: PlayerProps):JSX.Element {
       />
     </div>
   );
+}
+
+Player.propTypes = {
+  playerOptions: PropTypes.shape({
+    autoplay: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.oneOf(['muted', 'play', 'any']),
+    ]),
+    controls: PropTypes.bool,
+    height: PropTypes.number,
+    loop: PropTypes.bool,
+    muted: PropTypes.bool,
+    preload: PropTypes.oneOf(['auto', 'metadata', 'none']),
+    src: PropTypes.string,
+    width: PropTypes.string,
+  }),
+  resources: PropTypes.shape({
+    sources: PropTypes.arrayOf(PropTypes.shape({
+      url: PropTypes.string,
+      type: PropTypes.string,
+    })),
+    poster: PropTypes.string,
+  })
 }
 
 export default Player
