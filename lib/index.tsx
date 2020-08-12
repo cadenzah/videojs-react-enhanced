@@ -15,22 +15,36 @@ import 'video.js/dist/video-js.css';
 //   height: string | number;
 // }
 
-interface IPlayerOptions extends videojs.PlayerOptions {
-  preload?: 'auto' | 'metadata' | 'none';
+interface IPlayerOptions {
   autoplay?: 'muted' | 'play' | 'any';
+  controls?: boolean;
+  height?: number;
+  loop?: boolean;
+  muted?: boolean;
+  preload?: 'auto' | 'metadata' | 'none';
+  width?: number;
 }
 
-interface IResources extends videojs.PlayerOptions {
+interface IResources {
   sources?: Array<videojs.Tech.SourceObject>;
   poster?: string;
 }
 
-// interface IVideojsOptions extends videojs.PlayerOptions
+interface IVideojsOptions {
+  aspectRatio?: string;
+  fluid?: boolean;
+  inactivityTimeout?: number;
+  language?: string;
+  // liveui?: boolean;
+  nativeControlsForTouch?: boolean;
+  notSupportedMessage?: string;
+  playbackRates?: Array<number>;
+}
 
 interface PlayerProps {
   playerOptions: IPlayerOptions;
   resources: IResources;
-  // videojsOptions: IVideojsOptions;
+  videojsOptions: IVideojsOptions;
 
   // Custom Event Handlers
   onProgress?: () => void;
@@ -55,6 +69,7 @@ function Player(props: PlayerProps):JSX.Element {
   const playerOptions: videojs.PlayerOptions = {
     ...props.playerOptions,
     ...props.resources,
+    ...props.videojsOptions,
   };
   let playerRef = useRef<HTMLVideoElement>(null);
 
@@ -104,7 +119,16 @@ Player.propTypes = {
       type: PropTypes.string,
     })),
     poster: PropTypes.string,
-  })
+  }),
+  videojsOptions: PropTypes.shape({
+    aspectRatio: PropTypes.string,
+    fluid: PropTypes.bool,
+    inactivityTimeout: PropTypes.number,
+    language: PropTypes.string,
+    nativeControlsForTouch: PropTypes.bool,
+    notSupportedMessage: PropTypes.string,
+    playbackRates: PropTypes.arrayOf(PropTypes.number),
+  }),
 }
 
 export default Player
