@@ -6,5 +6,8 @@ module.exports = {
   ],
   roots: [
     './tests'
-  ]
+  ],
+  moduleNameMapper: {
+    '\\.(css|scss)$': 'identity-obj-proxy'
+  }
 };
