@@ -11,10 +11,3 @@ console.error = (message: string) => {
 
   originalConsoleError(message);
 };
-
-window.HTMLMediaElement.prototype.load = () => { /* do nothing */ };
-window.HTMLMediaElement.prototype.play = () => {
-   /* do nothing */ 
-   return Promise.resolve();
-};
-window.HTMLMediaElement.prototype.pause = () => { /* do nothing */ };
