@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import videojs from 'video.js';
+import videojs, { VideoJsPlayer } from 'video.js';
 import 'video.js/dist/video-js.css';
 
 interface IPlayerOptions {
@@ -30,9 +30,10 @@ interface IVideojsOptions {
 }
 
 interface PlayerProps {
-  playerOptions: IPlayerOptions;
-  resources: IResources;
-  videojsOptions: IVideojsOptions;
+  playerOptions?: IPlayerOptions;
+  resources?: IResources;
+  videojsOptions?: IVideojsOptions;
+  hideList: Array<string>;
 
   // Custom Event Handlers
   onProgress?: () => void;
@@ -48,9 +49,54 @@ interface PlayerProps {
   onLoadedMetadata?: () => void;
 }
 
+interface IDefaultControlBar extends videojs.ControlBar {
+  currentTimeDisplay?: videojs.Component;
+  pictureInPictureToggle?: videojs.Component;
+  playbackRateMenuButton?: videojs.Component;
+  playToggle?: videojs.Component;
+  progressControl?: videojs.Component;
+  remainingTimeDisplay?: videojs.Component;
+  volumePanel?: videojs.Component;
+}
+
 // props로 전달된 각 이벤트 리스너들을 대응되는 이벤트가 발생시 실행되도록 초기화
 function initializeEventListeners(props: PlayerProps): void {
 
+}
+
+// props로 전달된 스트링 값들을 파싱하여, 플레이어 UI 중 일부를 가려버린다
+
+function initializePlayerComponentsDisplay(player: VideoJsPlayer, hideList: Array<string>): void {
+  const hideSet: Set<string> = new Set<string>();
+  hideList.map((el) => {
+    hideSet.add(el);
+  })
+
+  const controlBar: IDefaultControlBar = player.controlBar;
+  
+  const remainingTimeDisplay = controlBar.remainingTimeDisplay;
+  if (hideSet.has('remainingTimeDisplay'))
+    remainingTimeDisplay?.hide();
+  
+  const pictureInPictureToggle = controlBar.pictureInPictureToggle;
+  if (hideSet.has('pictureInPictureToggle'))
+    pictureInPictureToggle?.hide();
+  
+  const playbackRateMenuButton = controlBar.playbackRateMenuButton;
+  if (hideSet.has('playbackRateMenuButton'))
+    playbackRateMenuButton?.hide();    
+
+  const playToggle = controlBar.playToggle;
+  if (hideSet.has('playToggle'))
+    playToggle?.hide();
+
+  const progressControl = controlBar.progressControl;
+  if (hideSet.has('progressControl'))
+    progressControl?.hide();
+
+  const volumePanel = controlBar.volumePanel;
+  if (hideSet.has('volumePanel'))
+    volumePanel?.hide();
 }
 
 function Player(props: PlayerProps):JSX.Element {
@@ -60,16 +106,16 @@ function Player(props: PlayerProps):JSX.Element {
     ...props.videojsOptions,
   };
   let playerRef = useRef<HTMLVideoElement>(null);
+  let player: VideoJsPlayer;
 
   useEffect(() => {
-    const player = videojs(
+    player = videojs(
       playerRef.current,
-      playerOptions,
-      () => {
-        if (playerOptions.src !== undefined)
-          player.src(playerOptions.src)
-      }
+      playerOptions
     );
+
+    initializePlayerComponentsDisplay(player, props.hideList)
+    // const controlBar: IDefaultControlBar = player.controlBar;
 
     return (): void => {
       if (player)
@@ -78,11 +124,13 @@ function Player(props: PlayerProps):JSX.Element {
   }, []);
 
   return (
-    <div data-vjs-player>
-      <video
-        ref={playerRef}
-        className={`video-js`}
-      />
+    <div>
+      <div data-vjs-player>
+        <video
+          ref={playerRef}
+          className={`video-js`}
+        />
+      </div>
     </div>
   );
 }
@@ -117,6 +165,8 @@ Player.propTypes = {
     notSupportedMessage: PropTypes.string,
     playbackRates: PropTypes.arrayOf(PropTypes.number),
   }),
+  hideList: PropTypes.arrayOf(PropTypes.string).isRequired,
+
   onProgress: PropTypes.func,
   onPlay: PropTypes.func,
   onPause: PropTypes.func,
@@ -130,4 +180,13 @@ Player.propTypes = {
   onLoadedMetadata: PropTypes.func,
 }
 
+Player.defaultProps = {
+  hideList: [],
+}
+
+export { 
+  IPlayerOptions,
+  IResources,
+  IVideojsOptions,
+}
 export default Player
