@@ -181,7 +181,27 @@ Player.propTypes = {
 }
 
 Player.defaultProps = {
+  playOptions: {
+    src: "",
+    hideList: [],
+  },
+  resources: {
+    sources: [],
+    poster: "",
+  },
   hideList: [],
+
+  onProgress: () => { },
+  onPlay: () => { },
+  onPause: () => { },
+  onWaiting: () => { },
+  onTimeUpdate: () => { },
+  onSeeking: () => { },
+  onSeeked: () => { },
+  onEnded: () => { },
+  onError: () => { },
+  onLoadedData: () => { },
+  onLoadedMetadata: () => { },
 }
 
 export { 
