@@ -37,10 +37,9 @@ interface PlayerProps {
 
   // Custom Event Handlers
   onReady: (player: VideoJsPlayer) => void;
-  onProgress: (event: EventTarget, player: VideoJsPlayer) => void;
-  onPlay: (event: EventTarget, player: VideoJsPlayer) => void;
-  onPause: (event: EventTarget, player: VideoJsPlayer) => void;
-  onWaiting: (event: EventTarget, player: VideoJsPlayer) => void;
+  onPlay: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+  onPause: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+  onWaiting: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
   onTimeUpdate: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
   onSeeking: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number) => void;
   onSeeked: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number, finishTimeSecond: number) => void;
@@ -66,26 +65,22 @@ function initializeEventListeners(player: VideoJsPlayer, props: PlayerProps): vo
   let previousTimeSecond: number = 0;
   let startPositionSecond: number = 0;
 
-  player.on('play', () => {
-
+  player.on('play', (event) => {
+    props.onPlay(event, player, player.currentTime());
   });
 
-  player.on('progress', () => {
-
+  player.on('pause', (event) => {
+    props.onPause(event, player, player.currentTime());
   });
 
-  player.on('pause', () => {
-    
+  player.on('waiting', (event) => {
+    props.onWaiting(event, player, player.currentTime());
   });
 
-  player.on('waiting', () => {
-    
-  });
-
-  player.on('timeupdate', (e) => {
+  player.on('timeupdate', (event) => {
     // 현재 마우스 커서가 위치한 시점, 재생 중인 시점
     let temp = player.currentTime();
-    props.onTimeUpdate(e, player, temp);
+    props.onTimeUpdate(event, player, temp);
     previousTimeSecond = currentTimeSecond;
     currentTimeSecond = temp;
     if (previousTimeSecond < currentTimeSecond) {
@@ -94,33 +89,33 @@ function initializeEventListeners(player: VideoJsPlayer, props: PlayerProps): vo
     }
   });
 
-  player.on('seeking', (e) => {
+  player.on('seeking', (event) => {
     // 탐색을 시작한 시점이 시작 지점
     player.off('timeupdate', () => { });
     player.one('seeked', () => { });
-    props.onSeeking(e, player, player.currentTime());
+    props.onSeeking(event, player, player.currentTime());
   });
 
-  player.on('seeked', (e) => {
+  player.on('seeked', (event) => {
     // 최종적으로 마우스 커서가 멈춘 곳을 기준으로 두 정보 모두 전달
     const completeTimeSecond = player.currentTime();
-    props.onSeeked(e, player, startPositionSecond, completeTimeSecond);
+    props.onSeeked(event, player, startPositionSecond, completeTimeSecond);
   });
 
-  player.on('ended', (e) => {
-    props.onEnded(e, player);
+  player.on('ended', (event) => {
+    props.onEnded(event, player);
   });
 
-  player.on('error', (e) => {
-    props.onError(e, player);
+  player.on('error', (event) => {
+    props.onError(event, player);
   });
 
-  player.on('loadeddata', (e) => {
-    props.onLoadedData(e, player);
+  player.on('loadeddata', (event) => {
+    props.onLoadedData(event, player);
   });
 
-  player.on('loadedmetadata', (e) => {
-    props.onLoadedMetadata(e,player);
+  player.on('loadedmetadata', (event) => {
+    props.onLoadedMetadata(event, player);
   });
 }
 
@@ -178,11 +173,7 @@ function Player(props: PlayerProps):JSX.Element {
     );
 
     initializePlayerComponentsDisplay(player, props.hideList);
-
     initializeEventListeners(player, props);
-
-    // const controlBar: IDefaultControlBar = player.controlBar;
-    // controlBar.playbackRateMenuButton?.show();
 
     return (): void => {
       if (player)
@@ -235,7 +226,6 @@ Player.propTypes = {
   hideList: PropTypes.arrayOf(PropTypes.string).isRequired,
 
   onReady: PropTypes.func.isRequired,
-  onProgress: PropTypes.func.isRequired,
   onPlay: PropTypes.func.isRequired,
   onPause: PropTypes.func.isRequired,
   onWaiting: PropTypes.func.isRequired,
@@ -260,7 +250,6 @@ Player.defaultProps = {
   hideList: [],
 
   onReady: () => { },
-  onProgress: () => { },
   onPlay: () => { },
   onPause: () => { },
   onWaiting: () => { },
