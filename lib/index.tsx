@@ -36,17 +36,18 @@ interface PlayerProps {
   hideList: Array<string>;
 
   // Custom Event Handlers
-  onProgress?: () => void;
-  onPlay?: () => void;
-  onPause?: () => void;
-  onWaiting?: () => void;
-  onTimeUpdate?: () => void;
-  onSeeking?: () => void;
-  onSeeked?: () => void;
-  onEnded?: () => void;
-  onError?: () => void;
-  onLoadedData?: () => void;
-  onLoadedMetadata?: () => void;
+  onReady: (player: VideoJsPlayer) => void;
+  onProgress: (event: EventTarget, player: VideoJsPlayer) => void;
+  onPlay: (event: EventTarget, player: VideoJsPlayer) => void;
+  onPause: (event: EventTarget, player: VideoJsPlayer) => void;
+  onWaiting: (event: EventTarget, player: VideoJsPlayer) => void;
+  onTimeUpdate: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+  onSeeking: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number) => void;
+  onSeeked: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number, finishTimeSecond: number) => void;
+  onEnded: (event: EventTarget, player: VideoJsPlayer) => void;
+  onError: (error: MediaError, player: VideoJsPlayer) => void;
+  onLoadedData: (event: EventTarget, player: VideoJsPlayer) => void;
+  onLoadedMetadata: (event: EventTarget, player: VideoJsPlayer) => void;
 }
 
 interface IDefaultControlBar extends videojs.ControlBar {
@@ -60,8 +61,67 @@ interface IDefaultControlBar extends videojs.ControlBar {
 }
 
 // props로 전달된 각 이벤트 리스너들을 대응되는 이벤트가 발생시 실행되도록 초기화
-function initializeEventListeners(props: PlayerProps): void {
+function initializeEventListeners(player: VideoJsPlayer, props: PlayerProps): void {
+  let currentTimeSecond: number = 0;
+  let previousTimeSecond: number = 0;
+  let startPositionSecond: number = 0;
 
+  player.on('play', () => {
+
+  });
+
+  player.on('progress', () => {
+
+  });
+
+  player.on('pause', () => {
+    
+  });
+
+  player.on('waiting', () => {
+    
+  });
+
+  player.on('timeupdate', (e) => {
+    // 현재 마우스 커서가 위치한 시점, 재생 중인 시점
+    let temp = player.currentTime();
+    props.onTimeUpdate(e, player, temp);
+    previousTimeSecond = currentTimeSecond;
+    currentTimeSecond = temp;
+    if (previousTimeSecond < currentTimeSecond) {
+        startPositionSecond = previousTimeSecond;
+        previousTimeSecond = currentTimeSecond;
+    }
+  });
+
+  player.on('seeking', (e) => {
+    // 탐색을 시작한 시점이 시작 지점
+    player.off('timeupdate', () => { });
+    player.one('seeked', () => { });
+    props.onSeeking(e, player, player.currentTime());
+  });
+
+  player.on('seeked', (e) => {
+    // 최종적으로 마우스 커서가 멈춘 곳을 기준으로 두 정보 모두 전달
+    const completeTimeSecond = player.currentTime();
+    props.onSeeked(e, player, startPositionSecond, completeTimeSecond);
+  });
+
+  player.on('ended', (e) => {
+    props.onEnded(e, player);
+  });
+
+  player.on('error', (e) => {
+    props.onError(e, player);
+  });
+
+  player.on('loadeddata', (e) => {
+    props.onLoadedData(e, player);
+  });
+
+  player.on('loadedmetadata', (e) => {
+    props.onLoadedMetadata(e,player);
+  });
 }
 
 // props로 전달된 스트링 값들을 파싱하여, 플레이어 UI 중 일부를 가려버린다
@@ -111,11 +171,18 @@ function Player(props: PlayerProps):JSX.Element {
   useEffect(() => {
     player = videojs(
       playerRef.current,
-      playerOptions
+      playerOptions, () => {
+        // Right after the player gets initialized
+        props.onReady(player);
+      }
     );
 
-    initializePlayerComponentsDisplay(player, props.hideList)
+    initializePlayerComponentsDisplay(player, props.hideList);
+
+    initializeEventListeners(player, props);
+
     // const controlBar: IDefaultControlBar = player.controlBar;
+    // controlBar.playbackRateMenuButton?.show();
 
     return (): void => {
       if (player)
@@ -167,17 +234,18 @@ Player.propTypes = {
   }),
   hideList: PropTypes.arrayOf(PropTypes.string).isRequired,
 
-  onProgress: PropTypes.func,
-  onPlay: PropTypes.func,
-  onPause: PropTypes.func,
-  onWaiting: PropTypes.func,
-  onTimeUpdate: PropTypes.func,
-  onSeeking: PropTypes.func,
-  onSeeked: PropTypes.func,
-  onEnded: PropTypes.func,
-  onError: PropTypes.func,
-  onLoadedData: PropTypes.func,
-  onLoadedMetadata: PropTypes.func,
+  onReady: PropTypes.func.isRequired,
+  onProgress: PropTypes.func.isRequired,
+  onPlay: PropTypes.func.isRequired,
+  onPause: PropTypes.func.isRequired,
+  onWaiting: PropTypes.func.isRequired,
+  onTimeUpdate: PropTypes.func.isRequired,
+  onSeeking: PropTypes.func.isRequired,
+  onSeeked: PropTypes.func.isRequired,
+  onEnded: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
+  onLoadedData: PropTypes.func.isRequired,
+  onLoadedMetadata: PropTypes.func.isRequired,
 }
 
 Player.defaultProps = {
@@ -191,6 +259,7 @@ Player.defaultProps = {
   },
   hideList: [],
 
+  onReady: () => { },
   onProgress: () => { },
   onPlay: () => { },
   onPause: () => { },
