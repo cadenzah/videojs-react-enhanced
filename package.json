@@ -9,6 +9,7 @@
     "lib": "lib",
     "test": "test"
   },
+  "types": "dist/types/lib/index.d.ts",
   "scripts": {
     "test:watch": "npx jest  --watch --coverage",
     "build:watch": "npx rollup -c --watch",

@@ -33,8 +33,9 @@ export default {
     resolve(extensions),
     typescript({
       rollupCommonJSResolveHack: true,
-      exclude: "**/__tests__/**",
+      exclude: "**/tests/**",
       clean: true,
+      useTsconfigDeclarationDir: true,
     }),
     commonjs({
       include: ["node_modules/**"],
