@@ -4,6 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import babel from '@rollup/plugin-babel';
 import cleanup from 'rollup-plugin-cleaner';
+import postcss from 'rollup-plugin-postcss';
 
 import pkg from "./package.json";
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
@@ -32,8 +33,9 @@ export default {
     resolve(extensions),
     typescript({
       rollupCommonJSResolveHack: true,
-      exclude: "**/__tests__/**",
+      exclude: "**/tests/**",
       clean: true,
+      useTsconfigDeclarationDir: true,
     }),
     commonjs({
       include: ["node_modules/**"],
@@ -43,5 +45,6 @@ export default {
       include: ['lib/**/*'],
       babelHelpers: 'runtime',
     }),
+    postcss(),
   ]
 };
