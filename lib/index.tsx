@@ -77,7 +77,7 @@ Player.propTypes = {
     notSupportedMessage: PropTypes.string,
     playbackRates: PropTypes.arrayOf(PropTypes.number),
   }),
-  hideList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hideList: PropTypes.arrayOf(PropTypes.string),
 
   onReady: PropTypes.func.isRequired,
   onPlay: PropTypes.func.isRequired,
