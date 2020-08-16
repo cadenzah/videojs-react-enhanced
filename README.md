@@ -46,7 +46,7 @@ function App() {
       onReady={(player) => console.log(player)}
       onPlay={(e, _, second) => console.log('Play!')}
       onPause={(e, _, second) => console.log('Pause!')}
-      onEnded={(e, _) => console.log('Ended!)}
+      onEnded={(e, _) => console.log('Ended!')}
     />
   );
 }
@@ -59,9 +59,7 @@ Options to initizliae player are categorized depending on characterisics of each
 
 You can configure each options and pass it through `props` as you can see in the **Usage** section above. **Every option can be omitted** and default value will be placed in it.
 
-> NOTE: See all available options for `videojs` in [official documentation](https://docs.videojs.com/tutorial-options.html); Not every option is supported via this module.
-
-If you want other options to be supported which are not on the list below, please make an issue for it!
+> NOTE: See all available options for `videojs` in [official documentation](https://docs.videojs.com/tutorial-options.html); Currently not every option is supported via this module. If you want other options to be supported which are not on the list below, please make an issue for it!
 
 #### `playerOptions`
 Options which are standard HTML5 `<video>` element attributes.
@@ -138,7 +136,7 @@ You can hide the components on the list below:
 ### Props to add custom event handlers
 You can set custom event handlers for standard HTML5 Video events through `props` as you can see in **Usage** section above.
 
-If you want other events to be supported which are not on the list below, please make an issue for it!
+> NOTE: If you want other events to be supported which are not on the list below, please make an issue for it!
 
 #### `onReady`
 - Mapped event: `ready`
