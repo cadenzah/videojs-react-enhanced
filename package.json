@@ -5,11 +5,14 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnest:main": "dist/index.es.js",
+  "files": [
+    "dist/**/*"
+  ],
   "directories": {
     "lib": "lib",
-    "test": "test"
+    "test": "tests"
   },
-  "types": "dist/types/lib/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "test:watch": "npx jest  --watch --coverage",
     "build:watch": "npx rollup -c --watch",
