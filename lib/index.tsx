@@ -17,11 +17,17 @@ function Player(props: PlayerProps):JSX.Element {
   let playerRef = useRef<HTMLVideoElement>(null);
   let player: VideoJsPlayer;
 
-  useEffect(() => {
+  useEffect(() => { 
     player = videojs(
       playerRef.current,
       playerOptions, () => {
         // Right after the player gets initialized
+        const videoSrc = props.playerOptions?.src
+        const videoPoster = props.resources?.poster
+        if (videoSrc !== undefined)
+          player.src(videoSrc);
+        if (videoPoster !== undefined)
+          player.poster(videoPoster);
         props.onReady(player);
       }
     );
