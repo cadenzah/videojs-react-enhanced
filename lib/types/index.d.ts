@@ -8,6 +8,7 @@ declare module 'video-react-enhanced' {
     loop?: boolean;
     muted?: boolean;
     preload?: 'auto' | 'metadata' | 'none';
+    src?: string;
     width?: number;
   }
   
