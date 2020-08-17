@@ -22,11 +22,9 @@ function Player(props: Player.PlayerProps):JSX.Element {
       playerOptions, () => {
         // Right after the player gets initialized
         const videoSrc = props.playerOptions?.src
+        videoSrc && player.src(videoSrc);
         const videoPoster = props.resources?.poster
-        if (videoSrc !== undefined)
-          player.src(videoSrc);
-        if (videoPoster !== undefined)
-          player.poster(videoPoster);
+        videoPoster && player.poster(videoPoster);
         props.onReady && props.onReady(player);
       }
     );
