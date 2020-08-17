@@ -1,6 +1,6 @@
 {
   "name": "videojs-react-enhanced",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "React.js wrapper component for Video.js player",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
