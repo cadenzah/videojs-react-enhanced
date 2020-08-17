@@ -11,9 +11,9 @@ interface IDefaultControlBar extends videojs.ControlBar {
   volumePanel?: videojs.Component;
 }
 
-function initializePlayerComponentsDisplay(player: VideoJsPlayer, hideList: Array<string>): void {
+function initializePlayerComponentsDisplay(player: VideoJsPlayer, hideList?: Array<string>): void {
   const hideSet: Set<string> = new Set<string>();
-  hideList.map((el) => {
+  hideList && hideList.map((el) => {
     hideSet.add(el);
   })
 

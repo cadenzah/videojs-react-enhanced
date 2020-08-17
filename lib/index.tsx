@@ -1,4 +1,3 @@
-import { PlayerProps } from 'video-react-enhanced';
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import videojs, { VideoJsPlayer } from 'video.js';
@@ -8,7 +7,7 @@ import {
 } from './utils/index';
 import 'video.js/dist/video-js.css';
 
-function Player(props: PlayerProps):JSX.Element {
+function Player(props: Player.PlayerProps):JSX.Element {
   const playerOptions: videojs.PlayerOptions = {
     ...props.playerOptions,
     ...props.resources,
@@ -28,7 +27,7 @@ function Player(props: PlayerProps):JSX.Element {
           player.src(videoSrc);
         if (videoPoster !== undefined)
           player.poster(videoPoster);
-        props.onReady(player);
+        props.onReady && props.onReady(player);
       }
     );
 
@@ -51,6 +50,55 @@ function Player(props: PlayerProps):JSX.Element {
       </div>
     </div>
   );
+}
+
+namespace Player {
+  export interface IPlayerOptions {
+    autoplay?: 'muted' | 'play' | 'any';
+    controls?: boolean;
+    height?: number;
+    loop?: boolean;
+    muted?: boolean;
+    preload?: 'auto' | 'metadata' | 'none';
+    src?: string;
+    width?: number;
+  }
+  
+  export interface IResources {
+    sources?: Array<videojs.Tech.SourceObject>;
+    poster?: string;
+  }
+  
+  export interface IVideoJsOptions {
+    aspectRatio?: string;
+    fluid?: boolean;
+    inactivityTimeout?: number;
+    language?: string;
+    // liveui?: boolean;
+    nativeControlsForTouch?: boolean;
+    notSupportedMessage?: string;
+    playbackRates?: Array<number>;
+  }
+  
+  export interface PlayerProps {
+    playerOptions?: IPlayerOptions;
+    resources?: IResources;
+    videojsOptions?: IVideoJsOptions;
+    hideList?: Array<string>;
+  
+    // Custom Event Handlers
+    onReady?: (player: VideoJsPlayer) => void;
+    onPlay?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+    onPause?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+    onWaiting?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+    onTimeUpdate?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+    onSeeking?: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number) => void;
+    onSeeked?: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number, finishTimeSecond: number) => void;
+    onEnded?: (event: EventTarget, player: VideoJsPlayer) => void;
+    onError?: (error: MediaError, player: VideoJsPlayer) => void;
+    onLoadedData?: (event: EventTarget, player: VideoJsPlayer) => void;
+    onLoadedMetadata?: (event: EventTarget, player: VideoJsPlayer) => void;
+  }
 }
 
 Player.propTypes = {
