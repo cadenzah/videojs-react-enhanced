@@ -24,7 +24,14 @@
   },
   "keywords": [
     "videojs",
-    "reactjs"
+    "video.js",
+    "reactjs",
+    "react",
+    "typescript",
+    "videojs-react",
+    "videojs-react-enhanced",
+    "videojs-react-wrapper",
+    "react-video-js-player"
   ],
   "author": "cadenzah <cadenzah93@gmail.com> (https://github.com/cadenzah)",
   "license": "MIT",
