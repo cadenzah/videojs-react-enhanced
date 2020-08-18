@@ -8,11 +8,32 @@ import {
 import 'video.js/dist/video-js.css';
 
 function Player(props: Player.PlayerProps):JSX.Element {
+  // plugins 배열을 한번 전처리
+  // import를 통하여 register가 이미 이루어졌고, 옵션 초기화만 하면 되는 경우를 plugins에 남기고
+  // 직접 register 및 실행까지 진행해야 하는 상황이면 manualPlugins에 놔두어서 별도의 등록 및 초기화 과정을 걸친다
+  // plugins는 전처리 이후 그대로 players 옵션에 포함시킨다
+    // plugins: {
+      // 플러그인 이름: { 옵션 객체 }
+    // }
+  // 만약 plugins가 빈 배열이라면, undefined로 만든다
+  let plugins: Player.IIndexableObject | undefined;
+  const tempPlugins: Player.IIndexableObject = { };
+  const manualPlugins: Array<Player.IVideoJsPlugin> = [];
+  props.videojsOptions?.plugins && props.videojsOptions.plugins.map(element => {
+    if (element.plugin === undefined) {
+      // 이미 plugin의 register 끝남
+      tempPlugins[element.name] = element.options;
+    } else {
+      manualPlugins.push(element);
+    }
+  });
+  plugins = (Object.keys(tempPlugins).length === 0) ? undefined : tempPlugins;
+
   const playerOptions: videojs.PlayerOptions = {
     ...props.playerOptions,
     ...props.resources,
     ...props.videojsOptions,
-    plugins: undefined,
+    plugins,
   };
   let playerRef = useRef<HTMLVideoElement>(null);
   let player: Player.IVideoJsPlayer;
@@ -31,15 +52,13 @@ function Player(props: Player.PlayerProps):JSX.Element {
 
     initializePlayerComponentsDisplay(player, props.hideList);
     initializeEventListeners(player, props);
-
-    // initialize plugins
-    const plugins = props.videojsOptions?.plugins;
-    plugins && plugins.map((element) => {
+    
+    // Registration and Option initialization of new plugin
+    manualPlugins.map(element => {
       videojs.registerPlugin(
         element.name,
-        element.plugin
+        element.plugin,
       );
-      // 플러그인마다 실행시 시그니처가 천차만별인데 이를 어떻게 다 맞출 수 있을까...
       player[element.name](player, element.options);
     });
 
@@ -62,6 +81,10 @@ function Player(props: Player.PlayerProps):JSX.Element {
 }
 
 namespace Player {
+  export interface IIndexableObject {
+    [key: string]: any;
+  }
+
   export interface IVideoJsPlayer extends VideoJsPlayer {
     [key: string]: any;
   }
@@ -91,12 +114,12 @@ namespace Player {
     nativeControlsForTouch?: boolean;
     notSupportedMessage?: string;
     playbackRates?: Array<number>;
-    plugins?: Array<VideoJsPlugin>;
+    plugins?: Array<IVideoJsPlugin>;
   }
 
-  export interface VideoJsPlugin {
+  export interface IVideoJsPlugin {
     name: string;
-    plugin: (pption: object) => void;
+    plugin: (option: object) => void | undefined;
     options: object;
   }
   
@@ -153,6 +176,7 @@ Player.propTypes = {
     plugins: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       plugin: PropTypes.func,
+      options: PropTypes.object,
     }))
   }),
   hideList: PropTypes.arrayOf(PropTypes.string),
