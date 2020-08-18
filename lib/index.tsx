@@ -12,25 +12,36 @@ function Player(props: Player.PlayerProps):JSX.Element {
     ...props.playerOptions,
     ...props.resources,
     ...props.videojsOptions,
+    plugins: undefined,
   };
   let playerRef = useRef<HTMLVideoElement>(null);
-  let player: VideoJsPlayer;
+  let player: Player.IVideoJsPlayer;
 
   useEffect(() => { 
     player = videojs(
       playerRef.current,
-      playerOptions, () => {
-        // Right after the player gets initialized
-        const videoSrc = props.playerOptions?.src
-        videoSrc && player.src(videoSrc);
-        const videoPoster = props.resources?.poster
-        videoPoster && player.poster(videoPoster);
-        props.onReady && props.onReady(player);
-      }
+      playerOptions
     );
+
+    const videoSrc = props.playerOptions?.src
+    videoSrc && player.src(videoSrc);
+    const videoPoster = props.resources?.poster
+    videoPoster && player.poster(videoPoster);
+    props.onReady && props.onReady(player);
 
     initializePlayerComponentsDisplay(player, props.hideList);
     initializeEventListeners(player, props);
+
+    // initialize plugins
+    const plugins = props.videojsOptions?.plugins;
+    plugins && plugins.map((element) => {
+      videojs.registerPlugin(
+        element.name,
+        element.plugin
+      );
+      // 플러그인마다 실행시 시그니처가 천차만별인데 이를 어떻게 다 맞출 수 있을까...
+      player[element.name](player, element.options);
+    });
 
     return (): void => {
       if (player)
@@ -51,6 +62,10 @@ function Player(props: Player.PlayerProps):JSX.Element {
 }
 
 namespace Player {
+  export interface IVideoJsPlayer extends VideoJsPlayer {
+    [key: string]: any;
+  }
+
   export interface IPlayerOptions {
     autoplay?: 'muted' | 'play' | 'any';
     controls?: boolean;
@@ -76,6 +91,13 @@ namespace Player {
     nativeControlsForTouch?: boolean;
     notSupportedMessage?: string;
     playbackRates?: Array<number>;
+    plugins?: Array<VideoJsPlugin>;
+  }
+
+  export interface VideoJsPlugin {
+    name: string;
+    plugin: (pption: object) => void;
+    options: object;
   }
   
   export interface PlayerProps {
@@ -128,6 +150,10 @@ Player.propTypes = {
     nativeControlsForTouch: PropTypes.bool,
     notSupportedMessage: PropTypes.string,
     playbackRates: PropTypes.arrayOf(PropTypes.number),
+    plugins: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      plugin: PropTypes.func,
+    }))
   }),
   hideList: PropTypes.arrayOf(PropTypes.string),
 
@@ -152,6 +178,9 @@ Player.defaultProps = {
   resources: {
     sources: [],
     poster: "",
+  },
+  videojsOptions: {
+    plugins: [],
   },
   hideList: [],
 
