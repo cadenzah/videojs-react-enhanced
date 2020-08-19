@@ -1,18 +1,24 @@
 # videojs-react-enhanced
 React.js wrapper component for Video.js player with handy and powerful features.
 
-> NOTE: The basic feature is working, but still it's currently working in progress, so provided features are unstable and in-depth features are not supported yet, be careful on using!
+> NOTE: The basic feature is working, but still it's currently working in progress, so provided features are unstable and in-depth features are not supported yet, and some usage could change in the future release. Please understand and be careful on using!
+
+## Table of Contents
+- Features
+- Install
+  - Prerequisite
+- Usage
 
 ## Features
 - Easy to use
 - Easy to configure video.js options
   - native HTML5 `<video>` options, `video.js`-native options
 - Add custom event handlers for video events
-- TypeScript support
+- Configure Video.js plugins
+- TypeScript support - `props`, options
 - ...and more comming soon!
   - CSS Style modification for UI components
   - Adding / Editing UI components
-  - Configuiring Video.js plugins
 
 ## Install
 
@@ -23,10 +29,21 @@ npm install --save videojs-react-enhanced
 yarn add videojs-react-enhanced
 ```
 
+### Prerequisite
+`videojs-react-enhanced` uses React and Video.js as peer dependencies. To use this module, you should manually install those dependencies in your project.
+
+```bash
+# using npm
+npm install --save react video.js
+# using yarn
+yarn add react video.js
+```
+
 ## Usage
 
 ```js
 import React from 'react';
+import videojs from 'video.js';
 import VREPlayer from 'videojs-react-enhanced';
 
 function App() {
@@ -54,6 +71,9 @@ function App() {
 export default App;
 ```
 
+> NOTE:
+> You should import `video.js` first than `videojs-react-enhanced` so that `videojs` object instantiated here is shared with `videojs-react-enhanced`.
+
 ### Props to initialize player
 Options to initizliae player are categorized depending on characterisics of each options. There are 4 different options to pass into `props`: `playerOptions`, `resources`, `videojsOptions`, `hideList`
 
@@ -63,6 +83,8 @@ You can configure each options and pass it through `props` as you can see in the
 
 #### `playerOptions`
 Options which are standard HTML5 `<video>` element attributes.
+
+> `Player.IPlayerOptions` type in TypeScript
 
 |Option name|Datatype|Default value|Description|
 |--------|------------|----|----|
@@ -80,6 +102,8 @@ Options to provide multiple content's resources. An array of objects that mirror
 
 In `poster` props, you can provide the URL for the content's poster image. This image will be displayed before the content starts playing.
 
+> `Player.IResources` type in TypeScript
+
 ```js
 // example
 const resources = {
@@ -87,7 +111,8 @@ const resources = {
     {
       src: 'http://url/to/source',
       type: 'video/type'
-    }
+    },
+    // ...
   ],
   poster: 'http://url/to/poster/image'
 }
@@ -95,6 +120,8 @@ const resources = {
 
 #### `videojsOptions`
 Options which are `videojs` specific.
+
+> `Player.IVideoJsOptions` type in TypeScript
 
 |Option name|Datatype|Default value|Description|
 |--------|------------|----|----|
@@ -104,6 +131,8 @@ Options which are `videojs` specific.
 |language|`string`|`en`|The player's language|
 |nativeControlsForTouch|`bool`|`false`|Whether to enable native controls for touch devices|
 |notSupportedMessage|`string`|Default string|Override the default message that is displayed when Video.js cannot play back a media source|
+|playbackRates|`Array<number>`|undefined|List of playback rates available to switch|
+|plugins|`Array<IVideoJsPlugin`|`[]`|List of Video.js plugins used for the player (See [Plugins]() section)|
 
 #### `hideList`
 Videojs player displays several UI components as a default, and you can choose what to hide by providing the target UI component's names.
@@ -232,6 +261,9 @@ You can set custom event handlers for standard HTML5 Video events through `props
     |---|---------|-------------|-----------|
     |1|`event`|`EventTarget`|Information object describing the emitted event|
     |2|`player`|`VideoJsPlayer`|Videojs `Player` object from which the event emitted|
+
+### Plugins
+
 
 ## License
 [MIT Lisence](https://github.com/cadenzah/videojs-react-enhanced/blob/master/LICENSE)
