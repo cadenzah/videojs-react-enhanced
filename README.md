@@ -8,6 +8,7 @@ React.js wrapper component for Video.js player with handy and powerful features.
 - Install
   - Prerequisite
 - Usage
+  - TypeScript Usage
   - Props to initialize player
   - Props to add custom event handlers
   - Plugins
@@ -77,6 +78,40 @@ export default App;
 
 > NOTE: You should **import `video.js` first than `videojs-react-enhanced`** so that `videojs` object instantiated here is shared with `videojs-react-enhanced`.
 
+### Typescript Usage
+
+```tsx
+import React from 'react';
+import videojs from 'video.js';
+import VREPlayer from 'videojs-react-enhanced';
+
+function App(): JSX.Element {
+  const playerOptions: VREPlayer.IPlayerOptions = {
+    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    controls: true, 
+    autoplay: "play",
+  };
+  const videojsOptions: VREPlayer.IVideoJsOptions = {
+    fluid: true,
+  };
+
+  return (
+    <VREPlayer
+      playerOptions={options}
+      videojsOptions={videojsOptions}
+      onReady={(player) => console.log(player)}
+      onPlay={(e, _, second) => console.log('Play!')}
+      onPause={(e, _, second) => console.log('Pause!')}
+      onEnded={(e, _) => console.log('Ended!')}
+    />
+  );
+}
+
+export default App;
+```
+
+You can use TypeScript types from `videojs-react-enhanced` module.
+
 ### Props to initialize player
 Options to initizliae player are categorized depending on characterisics of each options. There are 4 different options to pass into `props`: `playerOptions`, `resources`, `videojsOptions`, `hideList`
 
@@ -89,7 +124,7 @@ You can configure each options and pass it through `props` as you can see in the
 #### `playerOptions`
 Options which are standard HTML5 `<video>` element attributes.
 
-> `Player.IPlayerOptions` type in TypeScript
+> `IPlayerOptions` type in TypeScript
 
 |Option name|Datatype|Default value|Description|
 |--------|------------|----|----|
@@ -107,7 +142,7 @@ Options to provide multiple content's resources. An array of objects that mirror
 
 In `poster` props, you can provide the URL for the content's poster image. This image will be displayed before the content starts playing.
 
-> `Player.IResources` type in TypeScript
+> `IResources` type in TypeScript
 
 ```js
 // example
@@ -126,7 +161,7 @@ const resources = {
 #### `videojsOptions`
 Options which are `videojs` specific.
 
-> `Player.IVideoJsOptions` type in TypeScript
+> `IVideoJsOptions` type in TypeScript
 
 |Option name|Datatype|Default value|Description|
 |--------|------------|----|----|
