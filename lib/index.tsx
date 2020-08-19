@@ -8,31 +8,59 @@ import {
 import 'video.js/dist/video-js.css';
 
 function Player(props: Player.PlayerProps):JSX.Element {
+  // plugins 배열을 한번 전처리
+  // import를 통하여 register가 이미 이루어졌고, 옵션 초기화만 하면 되는 경우를 plugins에 남기고
+  // 직접 register 및 실행까지 진행해야 하는 상황이면 manualPlugins에 놔두어서 별도의 등록 및 초기화 과정을 걸친다
+  // plugins는 전처리 이후 그대로 players 옵션에 포함시킨다
+    // plugins: {
+      // 플러그인 이름: { 옵션 객체 }
+    // }
+  // 만약 plugins가 빈 배열이라면, undefined로 만든다
+  let plugins: Player.IIndexableObject | undefined;
+  const tempPlugins: Player.IIndexableObject = { };
+  const manualPlugins: Array<Player.IVideoJsPlugin> = [];
+  props.videojsOptions?.plugins && props.videojsOptions.plugins.map(element => {
+    if (element.plugin === undefined) {
+      // 이미 plugin의 register 끝남
+      tempPlugins[element.name] = element.options;
+    } else {
+      manualPlugins.push(element);
+    }
+  });
+  plugins = (Object.keys(tempPlugins).length === 0) ? undefined : tempPlugins;
+
   const playerOptions: videojs.PlayerOptions = {
     ...props.playerOptions,
     ...props.resources,
     ...props.videojsOptions,
+    plugins,
   };
   let playerRef = useRef<HTMLVideoElement>(null);
-  let player: VideoJsPlayer;
+  let player: Player.IVideoJsPlayer;
 
   useEffect(() => { 
     player = videojs(
       playerRef.current,
-      playerOptions, () => {
-        // Right after the player gets initialized
-        const videoSrc = props.playerOptions?.src
-        const videoPoster = props.resources?.poster
-        if (videoSrc !== undefined)
-          player.src(videoSrc);
-        if (videoPoster !== undefined)
-          player.poster(videoPoster);
-        props.onReady && props.onReady(player);
-      }
+      playerOptions
     );
+
+    const videoSrc = props.playerOptions?.src
+    videoSrc && player.src(videoSrc);
+    const videoPoster = props.resources?.poster
+    videoPoster && player.poster(videoPoster);
+    props.onReady && props.onReady(player);
 
     initializePlayerComponentsDisplay(player, props.hideList);
     initializeEventListeners(player, props);
+    
+    // Registration and Option initialization of new plugin
+    manualPlugins.map(element => {
+      videojs.registerPlugin(
+        element.name,
+        element.plugin,
+      );
+      player[element.name](player, element.options);
+    });
 
     return (): void => {
       if (player)
@@ -53,6 +81,14 @@ function Player(props: Player.PlayerProps):JSX.Element {
 }
 
 namespace Player {
+  export interface IIndexableObject {
+    [key: string]: any;
+  }
+
+  export interface IVideoJsPlayer extends VideoJsPlayer {
+    [key: string]: any;
+  }
+
   export interface IPlayerOptions {
     autoplay?: 'muted' | 'play' | 'any';
     controls?: boolean;
@@ -78,6 +114,13 @@ namespace Player {
     nativeControlsForTouch?: boolean;
     notSupportedMessage?: string;
     playbackRates?: Array<number>;
+    plugins?: Array<IVideoJsPlugin>;
+  }
+
+  export interface IVideoJsPlugin {
+    name: string;
+    plugin: (option: object) => void | undefined;
+    options: object;
   }
   
   export interface PlayerProps {
@@ -130,6 +173,11 @@ Player.propTypes = {
     nativeControlsForTouch: PropTypes.bool,
     notSupportedMessage: PropTypes.string,
     playbackRates: PropTypes.arrayOf(PropTypes.number),
+    plugins: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      plugin: PropTypes.func,
+      options: PropTypes.object,
+    }))
   }),
   hideList: PropTypes.arrayOf(PropTypes.string),
 
@@ -154,6 +202,9 @@ Player.defaultProps = {
   resources: {
     sources: [],
     poster: "",
+  },
+  videojsOptions: {
+    plugins: [],
   },
   hideList: [],
 
