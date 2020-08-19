@@ -55,7 +55,7 @@ function Player(props: Player.PlayerProps):JSX.Element {
     
     // Registration and Option initialization of new plugin
     manualPlugins.map(element => {
-      videojs.registerPlugin(
+      element.plugin && videojs.registerPlugin(
         element.name,
         element.plugin,
       );
@@ -119,7 +119,7 @@ namespace Player {
 
   export interface IVideoJsPlugin {
     name: string;
-    plugin: (option: object) => void | undefined;
+    plugin?: (option: object) => void;
     options: object;
   }
   
@@ -195,7 +195,7 @@ Player.propTypes = {
 }
 
 Player.defaultProps = {
-  playOptions: {
+  playerOptions: {
     src: "",
     hideList: [],
   },
