@@ -20,8 +20,9 @@ let events: {
 } = { };
 
 describe(`Utility module functions`, () => {
-  describe(`# initializeEventListener`, () => {
+  describe(`# initializeEventListener.ts`, () => {
     let player: videojs.Player;
+
     beforeEach(() => {
       // mock videojs player object for test
       player = {
@@ -36,6 +37,7 @@ describe(`Utility module functions`, () => {
     afterEach(() => {
       events = { };
     })
+
     it(`Custom event listeners are properly registered`, () => {
       //given
       const on = sinon.spy(player, 'on');
@@ -86,6 +88,52 @@ describe(`Utility module functions`, () => {
       })
     });
   });
+
+  describe(`# initializePlayerComponentDisplay.ts`, () => {
+    let player: videojs.Player;
+
+    beforeEach(() => {
+      player = {
+        controlBar: {
+          playToggle: {
+            hide: () => { }
+          },
+          volumeButton: {
+            hide: () => { }
+          }
+        } as unknown
+      }as videojs.Player;
+    })
+
+    it(`Address properly when \`hideList\` is an empty array`, () => {
+      // hidelist가 빈 배열일 때 에러가 안 발샏하는지
+      // given
+      const hideList: Array<string> = [];
+      
+      // when
+      initializePlayerComponentsDisplay(player, hideList);
+
+      // then - no error occurs
+      
+    });
+
+    it(`Executes \`.hide()\` methods preperly for elements in \`hideList\``, () => {
+      // hidelist를 기반으로 controlBar의 컴포넌트에 대하여 hide를 잘 실행시키는지
+      // given
+      const hideList: Array<string> = ['playToggle'];
+      const controlBar: {
+        [key: string]: any;
+      } = player.controlBar;
+      const playToggle: videojs.Component = controlBar['playToggle'];
+      const hide = sinon.spy(playToggle, 'hide');
+      
+      // when
+      initializePlayerComponentsDisplay(player, hideList);
+
+      // then
+      expect(hide.callCount).toBe(1);
+    })
+  })
 });
 
 function on(event: string, listener: (e: any) => void) {
