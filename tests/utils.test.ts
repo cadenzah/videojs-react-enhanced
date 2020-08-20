@@ -1,0 +1,110 @@
+import sinon, { expectation } from 'sinon';
+import videojs from 'video.js';
+import Player from '../lib';
+
+import {
+  initializeEventListeners,
+  initializePlayerComponentsDisplay,
+} from '../lib/utils';
+import { any } from 'prop-types';
+
+// player 객체를 전달하여 이벤트 리스너를 등록하고나면,
+// 특정 이벤트가 발생하였을 때 핸들러가 실행이 되는가?
+// 이벤트 발생을 어떻게 시뮬레이팅하는가? 
+
+// player.trigger 등을 활용하고,
+// 이벤트 리스너는 sinon stub을 줘서
+// 호출이 되었는지 여부를 확인하자
+let events: {
+  [key: string]: any;
+} = { };
+
+describe(`Utility module functions`, () => {
+  describe(`# initializeEventListener`, () => {
+    let player: videojs.Player;
+    beforeEach(() => {
+      // mock videojs player object for test
+      player = {
+        trigger: trigger,
+        on: on,
+        off: () => { },
+        one: () => { },
+        currentTime: () => { },
+      } as videojs.Player;
+    })
+
+    afterEach(() => {
+      events = { };
+    })
+    it(`Custom event listeners are properly registered`, () => {
+      //given
+      const on = sinon.spy(player, 'on');
+      const props: Player.PlayerProps = {
+
+      };
+
+      //when
+      initializeEventListeners(player, props);
+      on.restore();
+
+      //then
+      expect(on.callCount).toBe(10);
+    })
+
+    it(`Registered listeners are properly executed when an event emits`, () => {
+      // given
+      const counts: Array<number> = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+      const props: Player.PlayerProps = {
+        onPlay: () => { counts[0]++ },
+        onPause: () => { counts[1]++ },
+        onWaiting: () => { counts[2]++ },
+        onTimeUpdate: () => { counts[3]++ },
+        onSeeking: () => { counts[4]++ },
+        onSeeked: () => { counts[5]++ },
+        onEnded: () => { counts[6]++ },
+        onError: () => { counts[7]++ },
+        onLoadedData: () => { counts[8]++ },
+        onLoadedMetadata: () => { counts[9]++ },
+      };
+
+      // when
+      initializeEventListeners(player, props);
+      player.trigger('play');
+      player.trigger('pause');
+      player.trigger('waiting');
+      player.trigger('timeupdate');
+      player.trigger('seeking');
+      player.trigger('seeked');
+      player.trigger('ended');
+      player.trigger('error');
+      player.trigger('loadeddata');
+      player.trigger('loadedmetadata');
+
+      // then
+      counts.forEach(count => {
+        expect(count).toBe(1);
+      })
+    });
+  });
+});
+
+function on(event: string, listener: (e: any) => void) {
+  if (typeof events[event] !== 'object') {
+    events[event] = [];
+  }
+
+  events[event].push(listener);
+}
+
+function trigger(event: string) {
+  var i, listeners, length, args = [].slice.call(arguments, 1);
+
+  if (typeof events[event] === 'object') {
+    listeners = events[event].slice();
+    length = listeners.length;
+
+    for (i = 0; i < length; i++) {
+      listeners[i](args);
+    }
+  }
+}
