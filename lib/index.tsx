@@ -5,23 +5,24 @@ import {
   initializeEventListeners,
   initializePlayerComponentsDisplay,
   filterPlugins,
+  // generatePlayerOptions,
   // initializePlayer,
 } from './utils/index';
 import 'video.js/dist/video-js.css';
 
 function Player(props: Player.PlayerProps):JSX.Element {
-  let plugins: Player.IIndexableObject | undefined;
+  let autoPlugins: Player.IIndexableObject | undefined;
   let manualPlugins: Array<Player.IVideoJsPlugin>;
-  
+
   if (props.videojsOptions?.plugins !== undefined) {
-    [plugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);
+    [autoPlugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);
   }
 
   const playerOptions: videojs.PlayerOptions = {
     ...props.playerOptions,
     ...props.resources,
     ...props.videojsOptions,
-    plugins,
+    plugins: autoPlugins,
   };
   let playerRef = useRef<HTMLVideoElement>(null);
   let player: Player.IVideoJsPlayer;

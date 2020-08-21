@@ -6,6 +6,7 @@ import filterPlugins from './filterPlugins';
 export {
   initializeEventListeners,
   initializePlayerComponentsDisplay,
+  // generatePlayerOptions,
   // initializePlayer,
   filterPlugins,
 };
