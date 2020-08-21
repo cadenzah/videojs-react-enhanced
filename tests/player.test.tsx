@@ -5,9 +5,11 @@ import Player from '../lib';
 
 let component: RenderResult;
 
-describe(`not done yet`, () => {
-  it(`not done yet!!!!`, () => {
-
+describe(`Wrapper Component`, () => {
+  describe(`<Player />`, () => {
+    it(`not done yet!!!!`, () => {
+      render(<Player />);
+    });
   });
 });
 

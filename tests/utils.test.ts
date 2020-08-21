@@ -1,4 +1,5 @@
-import sinon, { expectation } from 'sinon';
+import sinon, { expectation, verify } from 'sinon';
+import { RefObject } from 'react';
 import videojs from 'video.js';
 import Player from '../lib';
 
@@ -7,6 +8,7 @@ import {
   initializePlayerComponentsDisplay,
   filterPlugins,
   generatePlayerOptions,
+  initializePlayer,
 } from '../lib/utils';
 import { any } from 'prop-types';
 
@@ -163,7 +165,7 @@ describe(`Utility module functions`, () => {
       
       expect(Array.isArray(manualPlugins)).toBe(true);
       expect(manualPlugins[0].name).toBe('PluginA');
-    })
+    });
 
     // AutoPlugin이 없을 경우, 첫번째 반환값은 undefined이다
     it(`Returns \`undefined\` as 1st element if there is no auto plugin`, () => {
@@ -182,7 +184,7 @@ describe(`Utility module functions`, () => {
       // then
       expect(typeof autoPlugins).toBe('undefined');
       expect(Array.isArray(manualPlugins)).toBe(true);
-    })
+    });
 
     // Manual Plugin이 없을 경우, 두번째 반환값은 []이다
     it(`Returns \`[]\` as 2nd element if there is no manual plugin`, () => {
@@ -201,9 +203,8 @@ describe(`Utility module functions`, () => {
       expect(typeof autoPlugins).toBe('object');
       expect(Array.isArray(manualPlugins)).toBe(true);
       expect(manualPlugins.length).toBe(0);
-    })
-
-  })
+    });
+  });
 
   describe(`# generatePlayerOptions.ts`, () => {
     // 전달된 옵션들이 하나의 객체로 잘 합쳐지는가
@@ -234,6 +235,103 @@ describe(`Utility module functions`, () => {
       expect(propsCount).toBe(7);
     });
   });
+
+  // describe(`# initializePlayer.ts`, () => {
+  //   let player: Player.IVideoJsPlayer;
+  //   let playerRef: HTMLVideoElement;
+  //   let propPlayerOptions: Player.IPlayerOptions;
+  //   let propVideojsOptions: Player.IVideoJsOptions;
+  //   let props: Player.PlayerProps;
+  //   let plugins: Array<Player.IVideoJsPlugin>;
+  //   let autoPlugins: filterPlugins.AutoPlugins | undefined
+  //   let manualPlugins: filterPlugins.Plugins;
+
+  //   beforeEach(() => {
+  //     propPlayerOptions = {
+  //       controls: true,
+  //       autoplay: 'play',
+  //       src: 'https://sample.com/video.mp4',
+  //     };
+
+  //     propVideojsOptions = {
+  //       fluid: true,
+  //       language: 'ko',
+  //       playbackRates: [0.5, 1.0, 1.5],
+  //     };
+
+  //     props = {
+  //       playerOptions: propPlayerOptions,
+  //       videojsOptions: propVideojsOptions,
+  //       onPlay: () => { },
+  //       onPause: () => { },
+  //     };
+
+  //     plugins = [
+  //       {
+  //         name: 'PluginA',
+  //         plugin: (option) => { },
+  //         options: { settings: true },
+  //       },
+  //       {
+  //         name: 'PluginB',
+  //         options: { settings: false },
+  //       },
+  //     ];
+      
+  //     [autoPlugins, manualPlugins] = filterPlugins(plugins);
+  //   });
+
+  //   // 플러그인 초기화가 잘 이루어지는지
+  //   // 옵션이 잘 전달되는지
+
+  //   it(`test`, () => {
+  //     // videojs의 생성자가 호출되는가
+  //       // mocking 필요
+  //       // 생성자 호출했을 때, option
+  //     // src, poster가 호출되는가
+  //     // 각각의 값이 제대로 세팅되는가 player 인스턴스 확인
+  //     // 플러그인
+
+  //     // given
+  //     const playerOptions: videojs.PlayerOptions = generatePlayerOptions(
+  //       props, autoPlugins,
+  //     );
+
+  //     const videojsObj = { videojs };
+  //     const spy = sinon.stub(videojsObj, 'videojs')
+  //       .callsFake((playerRef: HTMLVideoElement,
+  //         playerOptions: videojs.PlayerOptions | undefined): Player.IVideoJsPlayer => {
+  //         const player = { } as Player.IVideoJsPlayer;
+  //         // player.src = {
+  //         //   src(src: string): {},
+  //         //   src(): { return '' },
+  //         // };
+  //         // player.poster = (src: string) => { };
+          
+  //         const autoPlugins: Array<string> = (playerOptions?.plugins !== undefined) ? Object.keys(playerOptions?.plugins) : [];
+  //         // const autoPlugins = Object.keys(playerOptions.plugins);
+  //         autoPlugins.forEach(plugin => {
+  //           if (playerOptions?.plugins !== undefined) {
+  //             const newAutoPlugin = playerOptions?.plugins[plugin];
+  //             player[newAutoPlugin] = (player: videojs.Player, options: any) => { };
+  //           }              
+  //         });
+
+  //         return player;
+  //     });     
+
+  //     // when
+  //     player = initializePlayer(
+  //       playerRef,
+  //       playerOptions,
+  //       manualPlugins,
+  //     )
+
+  //     // then
+  //     // expect(spy.called)
+  //     spy.restore();
+  //   });
+  // });
 });
 
 function on(event: string, listener: (e: any) => void) {

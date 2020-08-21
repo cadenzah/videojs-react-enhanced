@@ -7,7 +7,7 @@ import generatePlayerOptions from './generatePlayerOptions';
 export {
   initializeEventListeners,
   initializePlayerComponentsDisplay,
+  filterPlugins,
   generatePlayerOptions,
   initializePlayer,
-  filterPlugins,
 };

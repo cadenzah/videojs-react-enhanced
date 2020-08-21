@@ -11,18 +11,14 @@
  * - For the latter case, `manualPlugins` array will be created, in which plugins need to be manually registered and initialize their option afterwards.
  */
 import Player from '../index';
+// import { Plugins, AutoPlugins } from 'filterPlugins';
 
-interface Plugins extends Array<Player.IVideoJsPlugin> { };
-interface AutoPlugins {
-  [key: string]: any;
-}
-
-function filterPlugins(plugins: Plugins): [
-  AutoPlugins | undefined,
-  Plugins] {
-  let resultAutoPlugins: AutoPlugins | undefined;
-  const autoPlugins: AutoPlugins = { };
-  const manualPlugins: Plugins = [];
+function filterPlugins(plugins: filterPlugins.Plugins): [
+  filterPlugins.AutoPlugins | undefined,
+  filterPlugins.Plugins] {
+  let resultAutoPlugins: filterPlugins.AutoPlugins | undefined;
+  const autoPlugins: filterPlugins.AutoPlugins = { };
+  const manualPlugins: filterPlugins.Plugins = [];
 
   plugins.map(element => {
     if (element.plugin === undefined) {
@@ -38,5 +34,12 @@ function filterPlugins(plugins: Plugins): [
     manualPlugins,
   ];
 }
+
+namespace filterPlugins {
+  export interface Plugins extends Array<Player.IVideoJsPlugin> { };
+  export interface AutoPlugins {
+    [key: string]: any;
+  }
+};
 
 export default filterPlugins

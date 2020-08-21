@@ -11,7 +11,7 @@ import {
 import 'video.js/dist/video-js.css';
 
 function Player(props: Player.PlayerProps):JSX.Element {
-  let playerRef = useRef<HTMLVideoElement>(null);
+  let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
   let player: Player.IVideoJsPlayer;
   let autoPlugins: Player.IIndexableObject | undefined;
   let manualPlugins: Array<Player.IVideoJsPlugin>;
@@ -26,6 +26,7 @@ function Player(props: Player.PlayerProps):JSX.Element {
     player = initializePlayer(playerRef.current, playerOptions, manualPlugins);
     initializePlayerComponentsDisplay(player, props.hideList);
     initializeEventListeners(player, props);
+    props.onReady && props.onReady(player);
 
     return (): void => {
       if (player)
