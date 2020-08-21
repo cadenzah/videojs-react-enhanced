@@ -1,5 +1,15 @@
-// plugins 배열을 받아서
-// 오토와 매뉴얼 두가지로 분류하여 그 결과를 반환해주는 함수
+/*
+ * # Process `plugins` array
+ *
+ * Plugins already registered on videojs object only need to pass options to `Videojs Player constructor`.
+ * On the other hand, plugins not registered yet have to be registered manually with its options.
+ *
+ * As an input, function will get a `plugins` array which contains plugin objects passed through React `props`, following `Player.IVideoJsPlugin` interface.
+ * - For the former case, `autoPlugins` object will be created, which contains each plugins' options that is used when player instance is created.
+ *   - Each key's name maps to a plugin's name, and its value has an option for that plugin.
+ *   - If there is no plugins that were previously generated, then `autoPlugins` object will be `undefined`, so that it can be ignored when creating player instance.
+ * - For the latter case, `manualPlugins` array will be created, in which plugins need to be manually registered and initialize their option afterwards.
+ */
 import Player from '../index';
 
 interface Plugins extends Array<Player.IVideoJsPlugin> { };
