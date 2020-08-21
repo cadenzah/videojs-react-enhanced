@@ -4,7 +4,7 @@
 import videojs, { VideoJsPlayer } from 'video.js';
 import Player from '../index';
 
-function generatePlayerOptions(props: Player.PlayerProps, autoPlugins: Player.IIndexableObject): videojs.PlayerOptions {
+function generatePlayerOptions(props: Player.PlayerProps, autoPlugins?: Player.IIndexableObject): videojs.PlayerOptions {
   const playerOptions: videojs.PlayerOptions = {
     ...props.playerOptions,
     ...props.resources,

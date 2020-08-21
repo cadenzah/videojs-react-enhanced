@@ -5,12 +5,14 @@ import {
   initializeEventListeners,
   initializePlayerComponentsDisplay,
   filterPlugins,
-  // generatePlayerOptions,
+  generatePlayerOptions,
   // initializePlayer,
 } from './utils/index';
 import 'video.js/dist/video-js.css';
 
 function Player(props: Player.PlayerProps):JSX.Element {
+  let playerRef = useRef<HTMLVideoElement>(null);
+  let player: Player.IVideoJsPlayer;
   let autoPlugins: Player.IIndexableObject | undefined;
   let manualPlugins: Array<Player.IVideoJsPlugin>;
 
@@ -18,15 +20,8 @@ function Player(props: Player.PlayerProps):JSX.Element {
     [autoPlugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);
   }
 
-  const playerOptions: videojs.PlayerOptions = {
-    ...props.playerOptions,
-    ...props.resources,
-    ...props.videojsOptions,
-    plugins: autoPlugins,
-  };
-  let playerRef = useRef<HTMLVideoElement>(null);
-  let player: Player.IVideoJsPlayer;
-
+  const playerOptions: videojs.PlayerOptions = generatePlayerOptions(props, autoPlugins);
+  
   useEffect(() => { 
     player = videojs(
       playerRef.current,
