@@ -5,6 +5,7 @@ import Player from '../lib';
 import {
   initializeEventListeners,
   initializePlayerComponentsDisplay,
+  filterPlugins,
   generatePlayerOptions,
 } from '../lib/utils';
 import { any } from 'prop-types';
@@ -33,11 +34,11 @@ describe(`Utility module functions`, () => {
         one: () => { },
         currentTime: () => { },
       } as videojs.Player;
-    })
+    });
 
     afterEach(() => {
       events = { };
-    })
+    });
 
     it(`Custom event listeners are properly registered`, () => {
       //given
@@ -52,7 +53,7 @@ describe(`Utility module functions`, () => {
 
       //then
       expect(on.callCount).toBe(10);
-    })
+    });
 
     it(`Registered listeners are properly executed when an event emits`, () => {
       // given
@@ -86,7 +87,7 @@ describe(`Utility module functions`, () => {
       // then
       counts.forEach(count => {
         expect(count).toBe(1);
-      })
+      });
     });
   });
 
@@ -103,8 +104,8 @@ describe(`Utility module functions`, () => {
             hide: () => { }
           }
         } as unknown
-      }as videojs.Player;
-    })
+      } as videojs.Player;
+    });
 
     it(`Address properly when \`hideList\` is an empty array`, () => {
       // hidelist가 빈 배열일 때 에러가 안 발샏하는지
@@ -133,11 +134,79 @@ describe(`Utility module functions`, () => {
 
       // then
       expect(hide.callCount).toBe(1);
+    });
+  });
+
+  describe(`# filterPlugins.ts`, () => {
+    // 각각에서 plugin이 function인지 undefined인지에 따라 다르게 분류된다.
+    it(`Properly filters whether a plugin is auto or manual`, () => {
+      // given
+      const plugins: Array<Player.IVideoJsPlugin> = [
+        {
+          name: 'PluginA',
+          plugin: (option) => { },
+          options: { settings: true },
+        },
+        {
+          name: 'PluginB',
+          options: { settings: false },
+        },
+      ]
+      // when
+      const [autoPlugins, manualPlugins] = filterPlugins(plugins);
+
+      // then
+      expect(typeof autoPlugins).toBe('object');
+      expect(Object.keys(autoPlugins as object)[0]).toBe('PluginB');
+      const optionsB = (autoPlugins !== undefined) ? autoPlugins['PluginB'] : {};
+      expect(Object.keys(optionsB as object)[0]).toBe('settings');
+      
+      expect(Array.isArray(manualPlugins)).toBe(true);
+      expect(manualPlugins[0].name).toBe('PluginA');
     })
+
+    // AutoPlugin이 없을 경우, 첫번째 반환값은 undefined이다
+    it(`Returns \`undefined\` as 1st element if there is no auto plugin`, () => {
+      // given
+      const plugins: Array<Player.IVideoJsPlugin> = [
+        {
+          name: 'PluginA',
+          plugin: (option) => { },
+          options: { settings: true },
+        },
+      ]
+
+      // when
+      const [autoPlugins, manualPlugins] = filterPlugins(plugins);
+
+      // then
+      expect(typeof autoPlugins).toBe('undefined');
+      expect(Array.isArray(manualPlugins)).toBe(true);
+    })
+
+    // Manual Plugin이 없을 경우, 두번째 반환값은 []이다
+    it(`Returns \`[]\` as 2nd element if there is no manual plugin`, () => {
+      // given
+      const plugins: Array<Player.IVideoJsPlugin> = [
+        {
+          name: 'PluginA',
+          options: { settings: true },
+        },
+      ]
+
+      // when
+      const [autoPlugins, manualPlugins] = filterPlugins(plugins);
+
+      // then
+      expect(typeof autoPlugins).toBe('object');
+      expect(Array.isArray(manualPlugins)).toBe(true);
+      expect(manualPlugins.length).toBe(0);
+    })
+
   })
 
-  describe(`# generatePlayerOptions`, () => {
-    // 전달된 옵션들이 하나의 객체로 잘 합쳐지는지 - 객체의 키 개수 세어보면 될듯?
+  describe(`# generatePlayerOptions.ts`, () => {
+    // 전달된 옵션들이 하나의 객체로 잘 합쳐지는가
     it(`Merges passed options into single option object`, () => {
       // given
       const playerOptions: Player.IPlayerOptions = {
@@ -149,7 +218,7 @@ describe(`Utility module functions`, () => {
         fluid: true,
         language: 'ko',
         playbackRates: [0.5, 1.0, 1.5],
-      }
+      };
       const props: Player.PlayerProps = {
         playerOptions,
         videojsOptions,
@@ -163,15 +232,14 @@ describe(`Utility module functions`, () => {
       // then
       const propsCount = Object.keys(_playerOptions).length;
       expect(propsCount).toBe(7);
-    })
-  })
+    });
+  });
 });
 
 function on(event: string, listener: (e: any) => void) {
   if (typeof events[event] !== 'object') {
     events[event] = [];
   }
-
   events[event].push(listener);
 }
 
