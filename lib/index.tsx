@@ -6,7 +6,7 @@ import {
   initializePlayerComponentsDisplay,
   filterPlugins,
   generatePlayerOptions,
-  // initializePlayer,
+  initializePlayer,
 } from './utils/index';
 import 'video.js/dist/video-js.css';
 
@@ -21,30 +21,11 @@ function Player(props: Player.PlayerProps):JSX.Element {
   }
 
   const playerOptions: videojs.PlayerOptions = generatePlayerOptions(props, autoPlugins);
-  
-  useEffect(() => { 
-    player = videojs(
-      playerRef.current,
-      playerOptions
-    );
 
-    const videoSrc = props.playerOptions?.src
-    videoSrc && player.src(videoSrc);
-    const videoPoster = props.resources?.poster
-    videoPoster && player.poster(videoPoster);
-    props.onReady && props.onReady(player);
-
+  useEffect(() => {
+    player = initializePlayer(playerRef.current, playerOptions, manualPlugins);
     initializePlayerComponentsDisplay(player, props.hideList);
     initializeEventListeners(player, props);
-    
-    // Registration and Option initialization of new plugin
-    manualPlugins.map(element => {
-      element.plugin && videojs.registerPlugin(
-        element.name,
-        element.plugin,
-      );
-      player[element.name](player, element.options);
-    });
 
     return (): void => {
       if (player)
