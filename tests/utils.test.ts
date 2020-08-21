@@ -5,6 +5,7 @@ import Player from '../lib';
 import {
   initializeEventListeners,
   initializePlayerComponentsDisplay,
+  generatePlayerOptions,
 } from '../lib/utils';
 import { any } from 'prop-types';
 
@@ -132,6 +133,36 @@ describe(`Utility module functions`, () => {
 
       // then
       expect(hide.callCount).toBe(1);
+    })
+  })
+
+  describe(`# generatePlayerOptions`, () => {
+    // 전달된 옵션들이 하나의 객체로 잘 합쳐지는지 - 객체의 키 개수 세어보면 될듯?
+    it(`Merges passed options into single option object`, () => {
+      // given
+      const playerOptions: Player.IPlayerOptions = {
+        controls: true,
+        autoplay: 'play',
+        src: 'https://sample.com/video.mp4',
+      };
+      const videojsOptions: Player.IVideoJsOptions = {
+        fluid: true,
+        language: 'ko',
+        playbackRates: [0.5, 1.0, 1.5],
+      }
+      const props: Player.PlayerProps = {
+        playerOptions,
+        videojsOptions,
+        onPlay: () => { },
+        onPause: () => { },
+      };
+
+      // when
+      const _playerOptions: videojs.PlayerOptions = generatePlayerOptions(props);
+
+      // then
+      const propsCount = Object.keys(_playerOptions).length;
+      expect(propsCount).toBe(7);
     })
   })
 });
