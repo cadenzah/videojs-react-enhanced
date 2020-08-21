@@ -19,7 +19,7 @@ interface AutoPlugins {
 
 function filterPlugins(plugins: Plugins): [
   AutoPlugins | undefined,
-  Plugins | undefined] {
+  Plugins] {
   let resultAutoPlugins: AutoPlugins | undefined;
   const autoPlugins: AutoPlugins = { };
   const manualPlugins: Plugins = [];
