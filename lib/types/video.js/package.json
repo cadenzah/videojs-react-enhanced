@@ -1,0 +1,94 @@
+{
+  "_from": "@types/video.js",
+  "_id": "@types/video.js@7.3.10",
+  "_inBundle": false,
+  "_integrity": "sha512-RJKdtmUMb8WFDe+btAeBW9NVUJ/nksb+/1S+Tca7HNwnRv9iEwt802hgRSAcFj6+sL/eNi264zcBjbBHP5yQVw==",
+  "_location": "/@types/video.js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@types/video.js",
+    "name": "@types/video.js",
+    "escapedName": "@types%2fvideo.js",
+    "scope": "@types",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/@types/video.js/-/video.js-7.3.10.tgz",
+  "_shasum": "95e563f5f21821d4f4bccf7343c359093e81895d",
+  "_spec": "@types/video.js",
+  "_where": "/Users/cadenzah/Programming/JavaScript/TypeScript/intern-project/video-player/videojs-react-enhanced",
+  "bugs": {
+    "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Vincent Bortone",
+      "url": "https://github.com/vbortone"
+    },
+    {
+      "name": "Simon Clériot",
+      "url": "https://github.com/scleriot"
+    },
+    {
+      "name": "Sean Bennett",
+      "url": "https://github.com/SWBennett06"
+    },
+    {
+      "name": "Christoph Wagner",
+      "url": "https://github.com/IgelCampus"
+    },
+    {
+      "name": "Gio Freitas",
+      "url": "https://github.com/giofreitas"
+    },
+    {
+      "name": "Grzegorz Błaszczyk",
+      "url": "https://github.com/gjanblaszczyk"
+    },
+    {
+      "name": "Stéphane Roucheray",
+      "url": "https://github.com/sroucheray"
+    },
+    {
+      "name": "Adam Eisenreich",
+      "url": "https://github.com/AkxeOne"
+    },
+    {
+      "name": "Mei Qingguang",
+      "url": "https://github.com/meikidd"
+    },
+    {
+      "name": "Joe Flateau",
+      "url": "https://github.com/joeflateau"
+    },
+    {
+      "name": "KuanYu Chu",
+      "url": "https://github.com/ckybonist"
+    }
+  ],
+  "dependencies": {},
+  "deprecated": false,
+  "description": "TypeScript definitions for Video.js",
+  "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped#readme",
+  "license": "MIT",
+  "main": "",
+  "name": "@types/video.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "directory": "types/video.js"
+  },
+  "scripts": {},
+  "typeScriptVersion": "3.0",
+  "types": "index.d.ts",
+  "typesPublisherContentHash": "7189e7d8b9000d8233e9ad9af3c0bf2bda89e0c84ddc38b2a985fd0287f929a2",
+  "version": "7.3.10"
+}
