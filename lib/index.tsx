@@ -14,7 +14,7 @@ function Player(props: Player.PlayerProps):JSX.Element {
   let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
   let player: Player.IVideoJsPlayer;
   let autoPlugins: Player.IIndexableObject | undefined;
-  let manualPlugins: Array<Player.IVideoJsPlugin>;
+  let manualPlugins: Array<Player.IVideoJsPlugin> = [];
 
   if (props.videojsOptions?.plugins !== undefined) {
     [autoPlugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);

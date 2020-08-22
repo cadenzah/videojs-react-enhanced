@@ -20,11 +20,47 @@ describe(`Integrated Test - Wrapper Component`, () => {
       cleanup();
     });
 
-    it(`Renders well with auto plugins`, () => {
+    it(`Renders with options properly`, () => {
+      // given
+      const playerOptions: Player.IPlayerOptions = {
+        controls: true,
+        autoplay: 'play',
+        src: 'https://sample.com/video.mp4',
+      };
+      const videojsOptions: Player.IVideoJsOptions = {
+        fluid: true,
+        language: 'ko',
+        playbackRates: [0.5, 1.0, 1.5],
+      };
+      const hideList: Array<string> = [
+        'playToggle'
+      ];
+      component =
+        <Player
+          playerOptions={playerOptions}
+          videojsOptions={videojsOptions}
+          hideList={hideList}
+          onPlay={() => { }}
+          onReady={() => { }}
+        />
+
+      // when
+      render(component);
+
+      // done - no error occurs
+      cleanup();
+    });
+
+    it(`Renders well with plugins`, () => {
       // given
       videojs.registerPlugin('PluginB', (options: any) => {})
 
       const plugins: Array<Player.IVideoJsPlugin> = [
+        {
+          name: 'PluginA',
+          plugin: (option) => { },
+          options: { settings: true },
+        },
         {
           name: 'PluginB',
           options: { settings: false },
@@ -44,33 +80,8 @@ describe(`Integrated Test - Wrapper Component`, () => {
 
       // done - no error occurs
       cleanup();
-      videojs.deregisterPlugin('PluginB');
-    });
-
-    it(`Renders well with manual plugins`, () => {
-      // given
-      const plugins: Array<Player.IVideoJsPlugin> = [
-        {
-          name: 'PluginA',
-          plugin: (option) => { },
-          options: { settings: true },
-        },
-      ];
-      const videojsOptions: Player.IVideoJsOptions = {
-        plugins,
-      }
-
-      component =
-      <Player
-        videojsOptions={videojsOptions}
-      />
-
-      // when
-      render(component);
-
-      // done - no error occurs
-      cleanup();
       videojs.deregisterPlugin('PluginA');
+      videojs.deregisterPlugin('PluginB');
     });
   });
 });

@@ -11,7 +11,6 @@
  * - For the latter case, `manualPlugins` array will be created, in which plugins need to be manually registered and initialize their option afterwards.
  */
 import Player from '../index';
-// import { Plugins, AutoPlugins } from 'filterPlugins';
 
 function filterPlugins(plugins: filterPlugins.Plugins): [
   filterPlugins.AutoPlugins | undefined,
