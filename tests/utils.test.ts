@@ -1,5 +1,4 @@
-import sinon, { expectation, verify } from 'sinon';
-import { RefObject } from 'react';
+import sinon from 'sinon';
 import videojs from 'video.js';
 import Player from '../lib';
 
@@ -8,9 +7,7 @@ import {
   initializePlayerComponentsDisplay,
   filterPlugins,
   generatePlayerOptions,
-  initializePlayer,
 } from '../lib/utils';
-import { any } from 'prop-types';
 
 // player 객체를 전달하여 이벤트 리스너를 등록하고나면,
 // 특정 이벤트가 발생하였을 때 핸들러가 실행이 되는가?
@@ -23,7 +20,7 @@ let events: {
   [key: string]: any;
 } = { };
 
-describe(`Utility module functions`, () => {
+describe(`Unit tests - Utility module functions`, () => {
   describe(`# initializeEventListener.ts`, () => {
     let player: videojs.Player;
 
@@ -235,103 +232,6 @@ describe(`Utility module functions`, () => {
       expect(propsCount).toBe(7);
     });
   });
-
-  // describe(`# initializePlayer.ts`, () => {
-  //   let player: Player.IVideoJsPlayer;
-  //   let playerRef: HTMLVideoElement;
-  //   let propPlayerOptions: Player.IPlayerOptions;
-  //   let propVideojsOptions: Player.IVideoJsOptions;
-  //   let props: Player.PlayerProps;
-  //   let plugins: Array<Player.IVideoJsPlugin>;
-  //   let autoPlugins: filterPlugins.AutoPlugins | undefined
-  //   let manualPlugins: filterPlugins.Plugins;
-
-  //   beforeEach(() => {
-  //     propPlayerOptions = {
-  //       controls: true,
-  //       autoplay: 'play',
-  //       src: 'https://sample.com/video.mp4',
-  //     };
-
-  //     propVideojsOptions = {
-  //       fluid: true,
-  //       language: 'ko',
-  //       playbackRates: [0.5, 1.0, 1.5],
-  //     };
-
-  //     props = {
-  //       playerOptions: propPlayerOptions,
-  //       videojsOptions: propVideojsOptions,
-  //       onPlay: () => { },
-  //       onPause: () => { },
-  //     };
-
-  //     plugins = [
-  //       {
-  //         name: 'PluginA',
-  //         plugin: (option) => { },
-  //         options: { settings: true },
-  //       },
-  //       {
-  //         name: 'PluginB',
-  //         options: { settings: false },
-  //       },
-  //     ];
-      
-  //     [autoPlugins, manualPlugins] = filterPlugins(plugins);
-  //   });
-
-  //   // 플러그인 초기화가 잘 이루어지는지
-  //   // 옵션이 잘 전달되는지
-
-  //   it(`test`, () => {
-  //     // videojs의 생성자가 호출되는가
-  //       // mocking 필요
-  //       // 생성자 호출했을 때, option
-  //     // src, poster가 호출되는가
-  //     // 각각의 값이 제대로 세팅되는가 player 인스턴스 확인
-  //     // 플러그인
-
-  //     // given
-  //     const playerOptions: videojs.PlayerOptions = generatePlayerOptions(
-  //       props, autoPlugins,
-  //     );
-
-  //     const videojsObj = { videojs };
-  //     const spy = sinon.stub(videojsObj, 'videojs')
-  //       .callsFake((playerRef: HTMLVideoElement,
-  //         playerOptions: videojs.PlayerOptions | undefined): Player.IVideoJsPlayer => {
-  //         const player = { } as Player.IVideoJsPlayer;
-  //         // player.src = {
-  //         //   src(src: string): {},
-  //         //   src(): { return '' },
-  //         // };
-  //         // player.poster = (src: string) => { };
-          
-  //         const autoPlugins: Array<string> = (playerOptions?.plugins !== undefined) ? Object.keys(playerOptions?.plugins) : [];
-  //         // const autoPlugins = Object.keys(playerOptions.plugins);
-  //         autoPlugins.forEach(plugin => {
-  //           if (playerOptions?.plugins !== undefined) {
-  //             const newAutoPlugin = playerOptions?.plugins[plugin];
-  //             player[newAutoPlugin] = (player: videojs.Player, options: any) => { };
-  //           }              
-  //         });
-
-  //         return player;
-  //     });     
-
-  //     // when
-  //     player = initializePlayer(
-  //       playerRef,
-  //       playerOptions,
-  //       manualPlugins,
-  //     )
-
-  //     // then
-  //     // expect(spy.called)
-  //     spy.restore();
-  //   });
-  // });
 });
 
 function on(event: string, listener: (e: any) => void) {
