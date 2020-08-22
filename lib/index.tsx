@@ -4,63 +4,29 @@ import videojs, { VideoJsPlayer } from 'video.js';
 import {
   initializeEventListeners,
   initializePlayerComponentsDisplay,
+  filterPlugins,
+  generatePlayerOptions,
+  initializePlayer,
 } from './utils/index';
 import 'video.js/dist/video-js.css';
 
 function Player(props: Player.PlayerProps):JSX.Element {
-  // plugins 배열을 한번 전처리
-  // import를 통하여 register가 이미 이루어졌고, 옵션 초기화만 하면 되는 경우를 plugins에 남기고
-  // 직접 register 및 실행까지 진행해야 하는 상황이면 manualPlugins에 놔두어서 별도의 등록 및 초기화 과정을 걸친다
-  // plugins는 전처리 이후 그대로 players 옵션에 포함시킨다
-    // plugins: {
-      // 플러그인 이름: { 옵션 객체 }
-    // }
-  // 만약 plugins가 빈 배열이라면, undefined로 만든다
-  let plugins: Player.IIndexableObject | undefined;
-  const tempPlugins: Player.IIndexableObject = { };
-  const manualPlugins: Array<Player.IVideoJsPlugin> = [];
-  props.videojsOptions?.plugins && props.videojsOptions.plugins.map(element => {
-    if (element.plugin === undefined) {
-      // 이미 plugin의 register 끝남
-      tempPlugins[element.name] = element.options;
-    } else {
-      manualPlugins.push(element);
-    }
-  });
-  plugins = (Object.keys(tempPlugins).length === 0) ? undefined : tempPlugins;
-
-  const playerOptions: videojs.PlayerOptions = {
-    ...props.playerOptions,
-    ...props.resources,
-    ...props.videojsOptions,
-    plugins,
-  };
-  let playerRef = useRef<HTMLVideoElement>(null);
+  let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
   let player: Player.IVideoJsPlayer;
+  let autoPlugins: Player.IIndexableObject | undefined;
+  let manualPlugins: Array<Player.IVideoJsPlugin> = [];
 
-  useEffect(() => { 
-    player = videojs(
-      playerRef.current,
-      playerOptions
-    );
+  if (props.videojsOptions?.plugins !== undefined) {
+    [autoPlugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);
+  }
 
-    const videoSrc = props.playerOptions?.src
-    videoSrc && player.src(videoSrc);
-    const videoPoster = props.resources?.poster
-    videoPoster && player.poster(videoPoster);
-    props.onReady && props.onReady(player);
+  const playerOptions: videojs.PlayerOptions = generatePlayerOptions(props, autoPlugins);
 
+  useEffect(() => {
+    player = initializePlayer(playerRef.current, playerOptions, manualPlugins);
     initializePlayerComponentsDisplay(player, props.hideList);
     initializeEventListeners(player, props);
-    
-    // Registration and Option initialization of new plugin
-    manualPlugins.map(element => {
-      element.plugin && videojs.registerPlugin(
-        element.name,
-        element.plugin,
-      );
-      player[element.name](player, element.options);
-    });
+    props.onReady && props.onReady(player);
 
     return (): void => {
       if (player)
