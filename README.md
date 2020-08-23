@@ -12,6 +12,7 @@ React.js wrapper component for Video.js player with handy and powerful features.
   - Props to initialize player
   - Props to add custom event handlers
   - Plugins
+- Contribution
 - License
 
 ## Features
@@ -439,6 +440,9 @@ export default App;
 When `videojs-react-enhanced` gets the passed plugin, it will register the plugin and initialize with the option provided.
 
 > NOTE: [As official document says](https://docs.videojs.com/tutorial-plugins.html), `videojs-react-enhanced` assumes that a plugin accepts only single `option` argument to initialize itself.
+
+## Contribution
+Fork the repository, make changes, commit your work, and make Pull Request!
 
 ## License
 [MIT Lisence](https://github.com/cadenzah/videojs-react-enhanced/blob/master/LICENSE)
