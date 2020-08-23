@@ -1,4 +1,10 @@
 # videojs-react-enhanced
+
+[![NPM](https://nodei.co/npm/videojs-react-enhanced.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/videojs-react-enhanced/)
+
+[![Build Status](https://travis-ci.com/cadenzah/videojs-react-enhanced.svg?branch=master)](https://travis-ci.com/cadenzah/videojs-react-enhanced)
+[![codecov](https://codecov.io/gh/cadenzah/videojs-react-enhanced/branch/master/graph/badge.svg)](https://codecov.io/gh/cadenzah/videojs-react-enhanced)
+
 React.js wrapper component for Video.js player with handy and powerful features.
 
 > NOTE: The basic feature is working, but still it's currently working in progress, so provided features are unstable and in-depth features are not supported yet, and some usage could change in the future release. Please understand and be careful on using!
