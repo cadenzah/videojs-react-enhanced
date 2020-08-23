@@ -14,6 +14,7 @@
   },
   "types": "dist/types/index.d.ts",
   "scripts": {
+    "test": "npx jest",
     "test:watch": "npx jest  --watchAll --coverage --verbose",
     "build:watch": "npx rollup -c --watch",
     "build:prod": "npx rollup -c rollup.config.prod.js",
