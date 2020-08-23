@@ -448,7 +448,7 @@ When `videojs-react-enhanced` gets the passed plugin, it will register the plugi
 > NOTE: [As official document says](https://docs.videojs.com/tutorial-plugins.html), `videojs-react-enhanced` assumes that a plugin accepts only single `option` argument to initialize itself.
 
 ## Contribution
-Fork the repository, make changes, commit your work, and make Pull Request!
+Fork the repository, make changes, commit your work, and make Pull Request.
 
 ## License
 [MIT Lisence](https://github.com/cadenzah/videojs-react-enhanced/blob/master/LICENSE)
