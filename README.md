@@ -22,7 +22,7 @@ React.js wrapper component for Video.js player with handy and powerful features.
 - Add custom event handlers for video events
 - Configure Video.js plugins
 - TypeScript support - `props`, options
-- ...and more comming soon!
+- ...and more features later
   - CSS Style modification for UI components
   - Adding / Editing UI components
 
