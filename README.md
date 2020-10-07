@@ -57,6 +57,7 @@ yarn add react video.js
 import React from 'react';
 import videojs from 'video.js';
 import VREPlayer from 'videojs-react-enhanced';
+import 'video.js/dist/video-js.css';
 
 function App() {
   const playerOptions = {
@@ -85,12 +86,15 @@ export default App;
 
 > NOTE: You should **import `video.js` first than `videojs-react-enhanced`** so that `videojs` object instantiated here is shared with `videojs-react-enhanced`.
 
+> NOTE: You should import `video.js/dist/video-js.css` after you import `videojs-react-enhanced`, otherwise the default style of player UI will be all broken. If you are using [Next.js](https://github.com/vercel/next.js) for your service, you can remove the statement importing CSS style as that is a global CSS style. See [this issue](https://github.com/cadenzah/videojs-react-enhanced/issues/32) for better understanding.
+
 ### Typescript Usage
 
 ```tsx
 import React from 'react';
 import videojs from 'video.js';
 import VREPlayer from 'videojs-react-enhanced';
+import 'video.js/dist/video-js.css';
 
 function App(): JSX.Element {
   const playerOptions: VREPlayer.IPlayerOptions = {
