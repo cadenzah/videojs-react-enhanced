@@ -8,7 +8,6 @@ import {
   generatePlayerOptions,
   initializePlayer,
 } from './utils/index';
-import 'video.js/dist/video-js.css';
 
 function Player(props: Player.PlayerProps):JSX.Element {
   let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
