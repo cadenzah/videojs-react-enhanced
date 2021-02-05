@@ -60,6 +60,7 @@ namespace Player {
     height?: number;
     loop?: boolean;
     muted?: boolean;
+    playsinline?: boolean;
     preload?: 'auto' | 'metadata' | 'none';
     src?: string;
     width?: number;
