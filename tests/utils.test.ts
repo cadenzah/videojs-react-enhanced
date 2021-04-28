@@ -51,12 +51,12 @@ describe(`Unit tests - Utility module functions`, () => {
       on.restore();
 
       //then
-      expect(on.callCount).toBe(10);
+      expect(on.callCount).toBe(11);
     });
 
     it(`Registered listeners are properly executed when an event emits`, () => {
       // given
-      const counts: Array<number> = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+      const counts: Array<number> = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
       const props: Player.PlayerProps = {
         onPlay: () => { counts[0]++ },
         onPause: () => { counts[1]++ },
@@ -68,6 +68,7 @@ describe(`Unit tests - Utility module functions`, () => {
         onError: () => { counts[7]++ },
         onLoadedData: () => { counts[8]++ },
         onLoadedMetadata: () => { counts[9]++ },
+        onPlaying: () => { counts[10]++ },
       };
 
       // when
@@ -75,6 +76,7 @@ describe(`Unit tests - Utility module functions`, () => {
       player.trigger('play');
       player.trigger('pause');
       player.trigger('waiting');
+      player.trigger('playing');
       player.trigger('timeupdate');
       player.trigger('seeking');
       player.trigger('seeked');

@@ -60,6 +60,7 @@ namespace Player {
     height?: number;
     loop?: boolean;
     muted?: boolean;
+    playsinline?: boolean;
     preload?: 'auto' | 'metadata' | 'none';
     src?: string;
     width?: number;
@@ -99,6 +100,7 @@ namespace Player {
     onPlay?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
     onPause?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
     onWaiting?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+    onPlaying?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
     onTimeUpdate?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
     onSeeking?: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number) => void;
     onSeeked?: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number, finishTimeSecond: number) => void;
@@ -150,6 +152,7 @@ Player.propTypes = {
   onPlay: PropTypes.func.isRequired,
   onPause: PropTypes.func.isRequired,
   onWaiting: PropTypes.func.isRequired,
+  onPlaying: PropTypes.func.isRequired,
   onTimeUpdate: PropTypes.func.isRequired,
   onSeeking: PropTypes.func.isRequired,
   onSeeked: PropTypes.func.isRequired,
@@ -177,6 +180,7 @@ Player.defaultProps = {
   onPlay: () => { },
   onPause: () => { },
   onWaiting: () => { },
+  onPlaying: () => { },
   onTimeUpdate: () => { },
   onSeeking: () => { },
   onSeeked: () => { },
