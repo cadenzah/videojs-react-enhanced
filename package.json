@@ -17,7 +17,7 @@
     "test": "npx jest --ci --coverage",
     "test:watch": "npx jest  --watchAll --coverage --verbose",
     "build:watch": "npx rollup -c --watch",
-    "build:prod": "npx rollup -c rollup.config.prod.js",
+    "build": "npx rollup -c rollup.config.prod.js",
     "prepare:peers": "npx install-peers -f"
   },
   "repository": {
@@ -59,6 +59,7 @@
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.45",
     "@types/sinon": "^9.0.4",
+    "@types/video.js": "^7.3.15",
     "identity-obj-proxy": "^3.0.0",
     "install-peers-cli": "^2.2.0",
     "jest": "^26.2.2",

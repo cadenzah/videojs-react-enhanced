@@ -1,5 +1,5 @@
 import videojs, { VideoJsPlayer } from 'video.js';
-import Player from '../index';
+import { Player } from 'videojs-react-enhanced';
 
 function initializePlayer(playerRef: HTMLVideoElement | null, playerOptions: videojs.PlayerOptions, manualPlugins: Array<Player.IVideoJsPlugin>): VideoJsPlayer {
   const player: Player.IVideoJsPlayer = videojs(

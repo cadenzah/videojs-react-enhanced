@@ -10,7 +10,7 @@
  *   - If there is no plugins that were previously generated, then `autoPlugins` object will be `undefined`, so that it can be ignored when creating player instance.
  * - For the latter case, `manualPlugins` array will be created, in which plugins need to be manually registered and initialize their option afterwards.
  */
-import Player from '../index';
+import { Player } from 'videojs-react-enhanced';
 
 function filterPlugins(plugins: filterPlugins.Plugins): [
   filterPlugins.AutoPlugins | undefined,

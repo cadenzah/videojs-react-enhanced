@@ -1,5 +1,5 @@
 import { VideoJsPlayer } from 'video.js';
-import Player from '../index';
+import { Player } from 'videojs-react-enhanced';
 // props로 전달된 각 이벤트 리스너들을 대응되는 이벤트가 발생시 실행되도록 초기화
 function initializeEventListeners(player: VideoJsPlayer, props: Player.PlayerProps): void {
   let currentTimeSecond: number = 0;

@@ -1,8 +1,8 @@
-import initializeEventListeners from './initializeEventListeners';
-import initializePlayerComponentsDisplay from './initializePlayerComponentsDisplay';
-import initializePlayer from './initializePlayer';
-import filterPlugins from './filterPlugins';
-import generatePlayerOptions from './generatePlayerOptions';
+import initializeEventListeners from '@/utils/initializeEventListeners';
+import initializePlayerComponentsDisplay from '@/utils/initializePlayerComponentsDisplay';
+import initializePlayer from '@/utils/initializePlayer';
+import filterPlugins from '@/utils/filterPlugins';
+import generatePlayerOptions from '@/utils/generatePlayerOptions';
 
 export {
   initializeEventListeners,

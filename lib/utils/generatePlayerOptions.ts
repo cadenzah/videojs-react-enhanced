@@ -2,7 +2,7 @@
 // 이후 추가 작업 수행한 뒤 player를 반환
 
 import videojs from 'video.js';
-import Player from '../index';
+import { Player } from 'videojs-react-enhanced';
 
 function generatePlayerOptions(props: Player.PlayerProps, autoPlugins?: Player.IIndexableObject): videojs.PlayerOptions {
   const playerOptions: videojs.PlayerOptions = {
