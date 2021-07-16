@@ -5,9 +5,9 @@ import filterPlugins from '@/utils/filterPlugins';
 import generatePlayerOptions from '@/utils/generatePlayerOptions';
 
 export {
-  initializeEventListeners,
-  initializePlayerComponentsDisplay,
-  filterPlugins,
-  generatePlayerOptions,
-  initializePlayer,
+    initializeEventListeners,
+    initializePlayerComponentsDisplay,
+    filterPlugins,
+    generatePlayerOptions,
+    initializePlayer,
 };

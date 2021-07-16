@@ -12,33 +12,35 @@
  */
 import { Player } from 'videojs-react-enhanced';
 
-function filterPlugins(plugins: filterPlugins.Plugins): [
-  filterPlugins.AutoPlugins | undefined,
-  filterPlugins.Plugins] {
-  let resultAutoPlugins: filterPlugins.AutoPlugins | undefined;
-  const autoPlugins: filterPlugins.AutoPlugins = { };
-  const manualPlugins: filterPlugins.Plugins = [];
+function filterPlugins(plugins: filterPlugins.Plugins):
+    [
+        filterPlugins.AutoPlugins | undefined,
+        filterPlugins.Plugins
+    ] {
+    let resultAutoPlugins: filterPlugins.AutoPlugins | undefined;
+    const autoPlugins: filterPlugins.AutoPlugins = { };
+    const manualPlugins: filterPlugins.Plugins = [];
 
-  plugins.map(element => {
-    if (element.plugin === undefined) {
-      autoPlugins[element.name] = element.options;
-    } else {
-      manualPlugins.push(element);
-    }
-  });
-  resultAutoPlugins = (Object.keys(autoPlugins).length === 0) ? undefined : autoPlugins;
+    plugins.map(element => {
+        if (element.plugin === undefined) {
+            autoPlugins[element.name] = element.options;
+        } else {
+            manualPlugins.push(element);
+        }
+    });
+    resultAutoPlugins = (Object.keys(autoPlugins).length === 0) ? undefined : autoPlugins;
 
-  return [
-    resultAutoPlugins,
-    manualPlugins,
-  ];
+    return [
+        resultAutoPlugins,
+        manualPlugins,
+    ];
 }
 
 namespace filterPlugins {
-  export interface Plugins extends Array<Player.IVideoJsPlugin> { };
-  export interface AutoPlugins {
-    [key: string]: any;
-  }
+    export interface Plugins extends Array<Player.IVideoJsPlugin> { };
+    export interface AutoPlugins {
+        [key: string]: any;
+    }
 };
 
 export default filterPlugins

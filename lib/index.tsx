@@ -1,50 +1,47 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
-  initializeEventListeners,
-  initializePlayerComponentsDisplay,
-  filterPlugins,
-  generatePlayerOptions,
-  initializePlayer,
+    initializeEventListeners,
+    initializePlayerComponentsDisplay,
+    filterPlugins,
+    generatePlayerOptions,
+    initializePlayer,
 } from '@/utils/index';
 
 import videojs from 'video.js';
 import { Player } from 'videojs-react-enhanced';
 
 function Player(props: Player.PlayerProps): JSX.Element {
-  let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
-  let player: Player.IVideoJsPlayer;
-  let autoPlugins: Player.IIndexableObject | undefined;
-  let manualPlugins: Array<Player.IVideoJsPlugin> = [];
+    let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
+    let player: Player.IVideoJsPlayer;
+    let autoPlugins: Player.IIndexableObject | undefined;
+    let manualPlugins: Array<Player.IVideoJsPlugin> = [];
 
-  if (props.videojsOptions?.plugins !== undefined) {
-    [autoPlugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);
-  }
-
-  const playerOptions: videojs.PlayerOptions = generatePlayerOptions(props, autoPlugins);
-
-  useEffect(() => {
-    player = initializePlayer(playerRef.current, playerOptions, manualPlugins);
-    initializePlayerComponentsDisplay(player, props.hideList);
-    initializeEventListeners(player, props);
-    props.onReady && props.onReady(player);
-
-    return (): void => {
-      if (player)
-        player.dispose();
+    if (props.videojsOptions?.plugins !== undefined) {
+        [autoPlugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);
     }
-  }, []);
 
-  return (
-    <div>
-      <div data-vjs-player>
-        <video
-          ref={playerRef}
-          className={`video-js`}
-        />
-      </div>
-    </div>
-  );
+    const playerOptions: videojs.PlayerOptions = generatePlayerOptions(props, autoPlugins);
+
+    useEffect(() => {
+        player = initializePlayer(playerRef.current, playerOptions, manualPlugins);
+        initializePlayerComponentsDisplay(player, props.hideList);
+        initializeEventListeners(player, props);
+        props.onReady && props.onReady(player);
+
+        return (): void => {
+        if (player)
+            player.dispose();
+        }
+    }, []);
+
+    return (
+        <div>
+            <div data-vjs-player>
+                <video ref={playerRef} className={`video-js`} />
+            </div>
+        </div>
+    );
 }
 
 // Player.propTypes = {
