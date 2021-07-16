@@ -24,14 +24,17 @@ function Player(props: Player.PlayerProps): JSX.Element {
     const playerOptions: videojs.PlayerOptions = generatePlayerOptions(props, autoPlugins);
 
     useEffect(() => {
-        player = initializePlayer(playerRef.current, playerOptions, manualPlugins);
-        initializePlayerComponentsDisplay(player, props.hideList);
-        initializeEventListeners(player, props);
-        props.onReady && props.onReady(player);
+        if (playerRef.current !== null) {
+            player = initializePlayer(playerRef.current, playerOptions, manualPlugins);
+            initializePlayerComponentsDisplay(player, props.hideList);
+            initializeEventListeners(player, props);
+            props.onReady && props.onReady(player);
+        }
 
         return (): void => {
-        if (player)
-            player.dispose();
+            if (player) {
+                player.dispose();
+            }
         }
     }, []);
 
