@@ -96,7 +96,7 @@ function Player(props: Player.PlayerProps): JSX.Element {
 //   onLoadedData: PropTypes.func.isRequired,
 //   onLoadedMetadata: PropTypes.func.isRequired,
 // }
-
+// 
 // Player.defaultProps = {
 //   playerOptions: {
 //     src: "",
@@ -115,6 +115,7 @@ function Player(props: Player.PlayerProps): JSX.Element {
 //   onPlay: () => { },
 //   onPause: () => { },
 //   onWaiting: () => { },
+//   onPlaying: () => { },
 //   onTimeUpdate: () => { },
 //   onSeeking: () => { },
 //   onSeeked: () => { },

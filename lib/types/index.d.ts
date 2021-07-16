@@ -66,6 +66,4 @@ declare module 'videojs-react-enhanced' {
       onLoadedMetadata?: (event: EventTarget, player: VideoJsPlayer) => void;
     }
   }
-
-  namespace 
 }

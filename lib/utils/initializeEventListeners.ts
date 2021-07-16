@@ -17,6 +17,10 @@ function initializeEventListeners(player: VideoJsPlayer, props: Player.PlayerPro
   player.on('waiting', (event) => {
     props.onWaiting && props.onWaiting(event, player, player.currentTime());
   });
+  
+  player.on('playing', (event) => {
+    props.onPlaying && props.onPlaying(event, player, player.currentTime());
+  });
 
   player.on('timeupdate', (event) => {
     // 현재 마우스 커서가 위치한 시점, 재생 중인 시점
