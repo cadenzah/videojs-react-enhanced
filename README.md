@@ -51,6 +51,10 @@ npm install --save react video.js
 yarn add react video.js
 ```
 
+> NOTE: Installed React package's version must be the same as that specified in this library, otherwise npm (or yarn) will assert an error saying that there is a problem resolving dependencies.
+>
+> If you are using the latest version of React and this library is outdated at this point, please make PR or issue about it.
+
 ## Usage
 
 ```js

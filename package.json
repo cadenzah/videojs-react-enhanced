@@ -17,7 +17,7 @@
         "test": "npx jest --ci --coverage",
         "test:watch": "npx jest  --watchAll --coverage --verbose",
         "build:watch": "npx rollup -c --watch",
-        "build": "npx rollup -c rollup.config.prod.js",
+        "build": "MODE=production npx rollup -c",
         "prepare:peers": "npx install-peers -f"
     },
     "repository": {
@@ -81,6 +81,6 @@
     },
     "peerDependencies": {
         "react": "^17.0.2",
-        "video.js": "^7.8.4"
+        "video.js": "^7.13.3"
     }
 }
