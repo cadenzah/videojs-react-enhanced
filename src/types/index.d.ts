@@ -1,5 +1,5 @@
 declare module 'videojs-react-enhanced' {
-    import { VideoJsPlayer } from 'video.js';
+    import videojs, { VideoJsPlayer } from 'video.js';
 
     namespace Player {
         export interface IIndexableObject {

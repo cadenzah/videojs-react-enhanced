@@ -8,43 +8,44 @@ import postcss from 'rollup-plugin-postcss';
 
 import pkg from "./package.json";
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
+const ROOT_DIR = "src";
 
 export default {
-  input: "lib/index.tsx",
-  output: [
-    {
-      file: pkg.main,
-      format: "cjs",
-      exports: "named",
-    },
-    {
-      file: pkg.module,
-      format: "es",
-      exports: "named",
-    }
-  ],
-  plugins: [
-    cleanup({
-      targets: [
-        './dist/',
-      ]
-    }),
-    external(),
-    resolve(extensions),
-    typescript({
-      rollupCommonJSResolveHack: true,
-      exclude: "**/tests/**",
-      clean: true,
-      useTsconfigDeclarationDir: true,
-    }),
-    commonjs({
-      include: ["node_modules/**"],
-    }),
-    babel({
-      extensions,
-      include: ['lib/**/*'],
-      babelHelpers: 'runtime',
-    }),
-    postcss(),
-  ]
+    input: `${ROOT_DIR}/lib/index.tsx`,
+    output: [
+        {
+            file: pkg.main,
+            format: "cjs",
+            exports: "named",
+        },
+        {
+            file: pkg.module,
+            format: "es",
+            exports: "named",
+        }
+    ],
+    plugins: [
+        cleanup({
+            targets: [
+                './dist/',
+            ]
+        }),
+        external(),
+        resolve(extensions),
+        typescript({
+            rollupCommonJSResolveHack: true,
+            exclude: "**/tests/**",
+            clean: true,
+            useTsconfigDeclarationDir: true,
+        }),
+        commonjs({
+            include: ["node_modules/**"],
+        }),
+        babel({
+            extensions,
+            include: [`${ROOT_DIR}/lib/**/*`],
+            babelHelpers: 'runtime',
+        }),
+        postcss(),
+    ]
 };

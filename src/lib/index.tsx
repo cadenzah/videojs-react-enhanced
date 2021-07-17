@@ -6,7 +6,7 @@ import {
     filterPlugins,
     generatePlayerOptions,
     initializePlayer,
-} from '@/utils/index';
+} from '@/lib/utils/index';
 
 import videojs from 'video.js';
 import { Player } from 'videojs-react-enhanced';
@@ -34,6 +34,7 @@ function Player(props: Player.PlayerProps): JSX.Element {
         return (): void => {
             if (player) {
                 player.dispose();
+                // should deregister plugins here?
             }
         }
     }, []);
