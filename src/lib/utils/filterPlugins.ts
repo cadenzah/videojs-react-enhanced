@@ -10,7 +10,7 @@
  *   - If there is no plugins that were previously generated, then `autoPlugins` object will be `undefined`, so that it can be ignored when creating player instance.
  * - For the latter case, `manualPlugins` array will be created, in which plugins need to be manually registered and initialize their option afterwards.
  */
-import { Player } from 'videojs-react-enhanced';
+import VRE from '@/lib';
 
 function filterPlugins(plugins: filterPlugins.Plugins):
     [
@@ -37,7 +37,7 @@ function filterPlugins(plugins: filterPlugins.Plugins):
 }
 
 namespace filterPlugins {
-    export interface Plugins extends Array<Player.IVideoJsPlugin> { };
+    export interface Plugins extends Array<VRE.IVideoJsPlugin> { };
     export interface AutoPlugins {
         [key: string]: any;
     }

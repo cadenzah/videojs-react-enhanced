@@ -8,14 +8,79 @@ import {
     initializePlayer,
 } from '@/lib/utils/index';
 
-import videojs from 'video.js';
-import { Player } from 'videojs-react-enhanced';
+import videojs, { VideoJsPlayer } from 'video.js';
 
-function Player(props: Player.PlayerProps): JSX.Element {
+namespace VideojsReactEnhanced {
+    export interface IIndexableObject {
+        [key: string]: any;
+    }
+
+    export interface IVideoJsPlayer extends VideoJsPlayer {
+        [key: string]: any;
+    }
+
+    export interface IPlayerOptions {
+        autoplay?: 'muted' | 'play' | 'any';
+        controls?: boolean;
+        height?: number;
+        loop?: boolean;
+        muted?: boolean;
+        playsinline?: boolean;
+        preload?: 'auto' | 'metadata' | 'none';
+        src?: string;
+        width?: number;
+    }
+
+    export interface IResources {
+        sources?: Array<videojs.Tech.SourceObject>;
+        poster?: string;
+    }
+
+    export interface IVideoJsOptions {
+        aspectRatio?: string;
+        fluid?: boolean;
+        inactivityTimeout?: number;
+        language?: string;
+        // liveui?: boolean;
+        nativeControlsForTouch?: boolean;
+        notSupportedMessage?: string;
+        playbackRates?: Array<number>;
+        plugins?: Array<IVideoJsPlugin>;
+    }
+
+    export interface IVideoJsPlugin {
+        name: string;
+        plugin?: (option: object) => void;
+        options: object;
+    }
+
+    export interface PlayerProps {
+        playerOptions?: IPlayerOptions;
+        resources?: IResources;
+        videojsOptions?: IVideoJsOptions;
+        hideList?: Array<string>;
+
+        // Custom Event Handlers
+        onReady?: (player: VideoJsPlayer) => void;
+        onPlay?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+        onPause?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+        onWaiting?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+        onPlaying?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+        onTimeUpdate?: (event: EventTarget, player: VideoJsPlayer, currentTimeSecond: number) => void;
+        onSeeking?: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number) => void;
+        onSeeked?: (event: EventTarget, player: VideoJsPlayer, startTimeSecond: number, finishTimeSecond: number) => void;
+        onEnded?: (event: EventTarget, player: VideoJsPlayer) => void;
+        onError?: (error: MediaError, player: VideoJsPlayer) => void;
+        onLoadedData?: (event: EventTarget, player: VideoJsPlayer) => void;
+        onLoadedMetadata?: (event: EventTarget, player: VideoJsPlayer) => void;
+    }
+}
+
+export function VREPlayer(props: VideojsReactEnhanced.PlayerProps) {
     let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
-    let player: Player.IVideoJsPlayer;
-    let autoPlugins: Player.IIndexableObject | undefined;
-    let manualPlugins: Array<Player.IVideoJsPlugin> = [];
+    let player: VideojsReactEnhanced.IVideoJsPlayer;
+    let autoPlugins: VideojsReactEnhanced.IIndexableObject | undefined;
+    let manualPlugins: Array<VideojsReactEnhanced.IVideoJsPlugin> = [];
 
     if (props.videojsOptions?.plugins !== undefined) {
         [autoPlugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);
@@ -97,7 +162,7 @@ function Player(props: Player.PlayerProps): JSX.Element {
 //   onLoadedData: PropTypes.func.isRequired,
 //   onLoadedMetadata: PropTypes.func.isRequired,
 // }
-// 
+
 // Player.defaultProps = {
 //   playerOptions: {
 //     src: "",
@@ -126,4 +191,4 @@ function Player(props: Player.PlayerProps): JSX.Element {
 //   onLoadedMetadata: () => { },
 // }
 
-export default Player;
+export default VideojsReactEnhanced;

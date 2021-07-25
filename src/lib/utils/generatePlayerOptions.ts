@@ -1,9 +1,12 @@
 // Merge options required to create a video.js player instance
 
 import videojs from 'video.js';
-import { Player } from 'videojs-react-enhanced';
+import VRE from '@/lib';
 
-function generatePlayerOptions(props: Player.PlayerProps, autoPlugins?: Player.IIndexableObject): videojs.PlayerOptions {
+function generatePlayerOptions(
+    props: VRE.PlayerProps,
+    autoPlugins?: VRE.IIndexableObject
+): videojs.PlayerOptions {
     const playerOptions: videojs.PlayerOptions = {
         ...props.playerOptions,
         ...props.resources,

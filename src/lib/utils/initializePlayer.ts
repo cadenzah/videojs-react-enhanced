@@ -1,12 +1,12 @@
 import videojs, { VideoJsPlayer } from 'video.js';
-import { Player } from 'videojs-react-enhanced';
+import VRE from '@/lib';
 
 function initializePlayer(
     playerRef: HTMLVideoElement,
     playerOptions: videojs.PlayerOptions,
-    manualPlugins: Array<Player.IVideoJsPlugin>
+    manualPlugins: Array<VRE.IVideoJsPlugin>,
 ): VideoJsPlayer {
-    const player: Player.IVideoJsPlayer = videojs(
+    const player: VRE.IVideoJsPlayer = videojs(
         playerRef,
         playerOptions
     );

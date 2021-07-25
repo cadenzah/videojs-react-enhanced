@@ -1,8 +1,11 @@
 import { VideoJsPlayer } from 'video.js';
-import { Player } from 'videojs-react-enhanced';
+import VRE from '@/lib';
 
 // Initialize listeners of video.js events which are included in `props`
-function initializeEventListeners(player: VideoJsPlayer, props: Player.PlayerProps): void {
+function initializeEventListeners(
+    player: VideoJsPlayer,
+    props: VRE.PlayerProps
+): void {
     let currentTimeSecond: number = 0;
     let previousTimeSecond: number = 0;
     let startPositionSecond: number = 0;

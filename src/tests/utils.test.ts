@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import videojs from 'video.js';
-import { Player } from 'videojs-react-enhanced';
+import VRE from '@/lib';
 
 import {
     initializeEventListeners,
@@ -42,7 +42,7 @@ describe(`Unit tests - Utility module functions`, () => {
         it(`Custom event listeners are properly registered`, () => {
             //given
             const on = sinon.spy(player, 'on');
-            const props: Player.PlayerProps = {
+            const props: VRE.PlayerProps = {
 
             };
 
@@ -57,7 +57,7 @@ describe(`Unit tests - Utility module functions`, () => {
         it(`Registered listeners are properly executed when an event emits`, () => {
             // given
             const counts: Array<number> = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
-            const props: Player.PlayerProps = {
+            const props: VRE.PlayerProps = {
                 onPlay: () => { counts[0]++ },
                 onPause: () => { counts[1]++ },
                 onWaiting: () => { counts[2]++ },
@@ -142,7 +142,7 @@ describe(`Unit tests - Utility module functions`, () => {
         // 각각에서 plugin이 function인지 undefined인지에 따라 다르게 분류된다.
         it(`Properly filters whether a plugin is auto or manual`, () => {
             // given
-            const plugins: Array<Player.IVideoJsPlugin> = [
+            const plugins: Array<VRE.IVideoJsPlugin> = [
                 {
                 name: 'PluginA',
                 plugin: (option) => { },
@@ -169,7 +169,7 @@ describe(`Unit tests - Utility module functions`, () => {
         // AutoPlugin이 없을 경우, 첫번째 반환값은 undefined이다
         it(`Returns \`undefined\` as 1st element if there is no auto plugin`, () => {
             // given
-            const plugins: Array<Player.IVideoJsPlugin> = [
+            const plugins: Array<VRE.IVideoJsPlugin> = [
                 {
                 name: 'PluginA',
                 plugin: (option) => { },
@@ -188,7 +188,7 @@ describe(`Unit tests - Utility module functions`, () => {
         // Manual Plugin이 없을 경우, 두번째 반환값은 []이다
         it(`Returns \`[]\` as 2nd element if there is no manual plugin`, () => {
             // given
-            const plugins: Array<Player.IVideoJsPlugin> = [
+            const plugins: Array<VRE.IVideoJsPlugin> = [
                 {
                 name: 'PluginA',
                 options: { settings: true },
@@ -209,17 +209,17 @@ describe(`Unit tests - Utility module functions`, () => {
         // 전달된 옵션들이 하나의 객체로 잘 합쳐지는가
         it(`Merges passed options into single option object`, () => {
             // given
-            const playerOptions: Player.IPlayerOptions = {
+            const playerOptions: VRE.IPlayerOptions = {
                 controls: true,
                 autoplay: 'play',
                 src: 'https://sample.com/video.mp4',
             };
-            const videojsOptions: Player.IVideoJsOptions = {
+            const videojsOptions: VRE.IVideoJsOptions = {
                 fluid: true,
                 language: 'ko',
                 playbackRates: [0.5, 1.0, 1.5],
             };
-            const props: Player.PlayerProps = {
+            const props: VRE.PlayerProps = {
                 playerOptions,
                 videojsOptions,
                 onPlay: () => { },

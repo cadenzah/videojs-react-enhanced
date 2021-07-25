@@ -3,18 +3,17 @@ import { cleanup, render, fireEvent, RenderResult } from '@testing-library/react
 import sinon from 'sinon';
 import videojs, { VideoJsPlayer } from 'video.js';
 // TODO: @/lib/index.tsx won't export React component and namespace altogether; It get's type-error
-import PlayerComponent from '@/lib';
-import { Player } from 'videojs-react-enhanced';
+import VRE, { VREPlayer } from '@/lib';
 
 let component: RenderResult;
 
 describe(`Integrated Test - Wrapper Component`, () => {
-    describe(`<Player />`, () => {
+    describe(`<VREPlayer />`, () => {
         let component: JSX.Element;
 
         it(`Renders and unmounts well without any error`, () => {
             // given
-            component = <PlayerComponent />;
+            component = <VREPlayer />;
 
             // when
             render(component);
@@ -25,12 +24,12 @@ describe(`Integrated Test - Wrapper Component`, () => {
 
         it(`Renders with options properly`, () => {
             // given
-            const playerOptions: Player.IPlayerOptions = {
+            const playerOptions: VRE.IPlayerOptions = {
                 controls: true,
                 autoplay: 'play',
                 src: 'https://sample.com/video.mp4',
             };
-            const videojsOptions: Player.IVideoJsOptions = {
+            const videojsOptions: VRE.IVideoJsOptions = {
                 fluid: true,
                 language: 'ko',
                 playbackRates: [0.5, 1.0, 1.5],
@@ -39,12 +38,12 @@ describe(`Integrated Test - Wrapper Component`, () => {
                 'playToggle'
             ];
             component =
-                <PlayerComponent
-                playerOptions={playerOptions}
-                videojsOptions={videojsOptions}
-                hideList={hideList}
-                onPlay={() => { }}
-                onReady={() => { }}
+                <VREPlayer
+                    playerOptions={playerOptions}
+                    videojsOptions={videojsOptions}
+                    hideList={hideList}
+                    onPlay={() => { }}
+                    onReady={() => { }}
                 />
 
             // when
@@ -58,7 +57,7 @@ describe(`Integrated Test - Wrapper Component`, () => {
             // given
             videojs.registerPlugin('PluginB', (options: any) => {})
 
-            const plugins: Array<Player.IVideoJsPlugin> = [
+            const plugins: Array<VRE.IVideoJsPlugin> = [
                 {
                 name: 'PluginA',
                 plugin: (option) => { },
@@ -69,12 +68,12 @@ describe(`Integrated Test - Wrapper Component`, () => {
                 options: { settings: false },
                 },
             ];
-            const videojsOptions: Player.IVideoJsOptions = {
+            const videojsOptions: VRE.IVideoJsOptions = {
                 plugins,
             }
 
             component =
-            <PlayerComponent
+            <VREPlayer
                 videojsOptions={videojsOptions}
             />
 
