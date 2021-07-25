@@ -56,7 +56,7 @@ describe(`Unit tests - Utility module functions`, () => {
 
         it(`Registered listeners are properly executed when an event emits`, () => {
             // given
-            const counts: Array<number> = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+            const counts: number[] = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
             const props: VRE.PlayerProps = {
                 onPlay: () => { counts[0]++ },
                 onPause: () => { counts[1]++ },
@@ -111,7 +111,7 @@ describe(`Unit tests - Utility module functions`, () => {
         it(`Address properly when \`hideList\` is an empty array`, () => {
             // hidelist가 빈 배열일 때 에러가 안 발샏하는지
             // given
-            const hideList: Array<string> = [];
+            const hideList: string[] = [];
             
             // when
             initializePlayerComponentsDisplay(player, hideList);
@@ -123,7 +123,7 @@ describe(`Unit tests - Utility module functions`, () => {
         it(`Executes \`.hide()\` methods preperly for elements in \`hideList\``, () => {
             // hidelist를 기반으로 controlBar의 컴포넌트에 대하여 hide를 잘 실행시키는지
             // given
-            const hideList: Array<string> = ['playToggle'];
+            const hideList: string[] = ['playToggle'];
             const controlBar: {
                 [key: string]: any;
             } = player.controlBar;
@@ -142,7 +142,7 @@ describe(`Unit tests - Utility module functions`, () => {
         // 각각에서 plugin이 function인지 undefined인지에 따라 다르게 분류된다.
         it(`Properly filters whether a plugin is auto or manual`, () => {
             // given
-            const plugins: Array<VRE.IVideoJsPlugin> = [
+            const plugins: VRE.IVideoJsPlugin[] = [
                 {
                 name: 'PluginA',
                 plugin: (option) => { },
@@ -169,7 +169,7 @@ describe(`Unit tests - Utility module functions`, () => {
         // AutoPlugin이 없을 경우, 첫번째 반환값은 undefined이다
         it(`Returns \`undefined\` as 1st element if there is no auto plugin`, () => {
             // given
-            const plugins: Array<VRE.IVideoJsPlugin> = [
+            const plugins: VRE.IVideoJsPlugin[] = [
                 {
                 name: 'PluginA',
                 plugin: (option) => { },
@@ -188,7 +188,7 @@ describe(`Unit tests - Utility module functions`, () => {
         // Manual Plugin이 없을 경우, 두번째 반환값은 []이다
         it(`Returns \`[]\` as 2nd element if there is no manual plugin`, () => {
             // given
-            const plugins: Array<VRE.IVideoJsPlugin> = [
+            const plugins: VRE.IVideoJsPlugin[] = [
                 {
                 name: 'PluginA',
                 options: { settings: true },

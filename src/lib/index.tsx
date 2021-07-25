@@ -32,7 +32,7 @@ namespace VideojsReactEnhanced {
     }
 
     export interface IResources {
-        sources?: Array<videojs.Tech.SourceObject>;
+        sources?: videojs.Tech.SourceObject[];
         poster?: string;
     }
 
@@ -44,8 +44,8 @@ namespace VideojsReactEnhanced {
         // liveui?: boolean;
         nativeControlsForTouch?: boolean;
         notSupportedMessage?: string;
-        playbackRates?: Array<number>;
-        plugins?: Array<IVideoJsPlugin>;
+        playbackRates?: number[];
+        plugins?: IVideoJsPlugin[];
     }
 
     export interface IVideoJsPlugin {
@@ -58,7 +58,7 @@ namespace VideojsReactEnhanced {
         playerOptions?: IPlayerOptions;
         resources?: IResources;
         videojsOptions?: IVideoJsOptions;
-        hideList?: Array<string>;
+        hideList?: string[];
 
         // Custom Event Handlers
         onReady?: (player: VideoJsPlayer) => void;
@@ -80,7 +80,7 @@ export function VREPlayer(props: VideojsReactEnhanced.PlayerProps) {
     let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
     let player: VideojsReactEnhanced.IVideoJsPlayer;
     let autoPlugins: VideojsReactEnhanced.IIndexableObject | undefined;
-    let manualPlugins: Array<VideojsReactEnhanced.IVideoJsPlugin> = [];
+    let manualPlugins: VideojsReactEnhanced.IVideoJsPlugin[] = [];
 
     if (props.videojsOptions?.plugins !== undefined) {
         [autoPlugins, manualPlugins] = filterPlugins(props.videojsOptions?.plugins);

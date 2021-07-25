@@ -12,11 +12,10 @@
  */
 import VRE from '@/lib';
 
-function filterPlugins(plugins: filterPlugins.Plugins):
-    [
-        filterPlugins.AutoPlugins | undefined,
-        filterPlugins.Plugins
-    ] {
+function filterPlugins(plugins: filterPlugins.Plugins): [
+    filterPlugins.AutoPlugins | undefined,
+    filterPlugins.Plugins
+] {
     let resultAutoPlugins: filterPlugins.AutoPlugins | undefined;
     const autoPlugins: filterPlugins.AutoPlugins = { };
     const manualPlugins: filterPlugins.Plugins = [];

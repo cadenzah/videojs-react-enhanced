@@ -4,7 +4,7 @@ import VRE from '@/lib';
 function initializePlayer(
     playerRef: HTMLVideoElement,
     playerOptions: videojs.PlayerOptions,
-    manualPlugins: Array<VRE.IVideoJsPlugin>,
+    manualPlugins: VRE.IVideoJsPlugin[]
 ): VideoJsPlayer {
     const player: VRE.IVideoJsPlayer = videojs(
         playerRef,

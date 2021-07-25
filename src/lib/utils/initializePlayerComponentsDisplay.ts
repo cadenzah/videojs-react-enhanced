@@ -6,7 +6,10 @@ interface IDefaultControlBar extends videojs.ControlBar {
     [key: string]: any;
 }
 
-function initializePlayerComponentsDisplay(player: VideoJsPlayer, hideList?: Array<string>): void {
+function initializePlayerComponentsDisplay(
+    player: VideoJsPlayer,
+    hideList?: string[]
+): void {
     const controlBar: IDefaultControlBar = player.controlBar;
     hideList && hideList.map(component => {
         controlBar[component] && controlBar[component].hide();

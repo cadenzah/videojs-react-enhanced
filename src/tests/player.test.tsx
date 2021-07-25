@@ -34,7 +34,7 @@ describe(`Integrated Test - Wrapper Component`, () => {
                 language: 'ko',
                 playbackRates: [0.5, 1.0, 1.5],
             };
-            const hideList: Array<string> = [
+            const hideList: string[] = [
                 'playToggle'
             ];
             component =
@@ -57,7 +57,7 @@ describe(`Integrated Test - Wrapper Component`, () => {
             // given
             videojs.registerPlugin('PluginB', (options: any) => {})
 
-            const plugins: Array<VRE.IVideoJsPlugin> = [
+            const plugins: VRE.IVideoJsPlugin[] = [
                 {
                 name: 'PluginA',
                 plugin: (option) => { },
