@@ -12,25 +12,25 @@ React.js wrapper component for Video.js player with handy and powerful features.
 ## Table of Contents
 - Features
 - Install
-  - Prerequisite
+    - Prerequisite
 - Usage
-  - TypeScript Usage
-  - Props to initialize player
-  - Props to add custom event handlers
-  - Plugins
+    - TypeScript Usage
+    - Props to initialize player
+    - Props to add custom event handlers
+    - Plugins
 - Contribution
 - License
 
 ## Features
 - Easy to use
 - Easy to configure video.js options
-  - native HTML5 `<video>` options, `video.js`-native options
+    - native HTML5 `<video>` options, `video.js`-native options
 - Add custom event handlers for video events
 - Configure Video.js plugins
 - TypeScript support - `props`, options
 - ...and more features later!
-  - CSS Style modification for UI components
-  - Adding / Editing UI components
+    - CSS Style modification for UI components
+    - Adding / Editing UI components
 
 ## Install
 
@@ -60,29 +60,29 @@ yarn add react video.js
 ```js
 import React from 'react';
 import videojs from 'video.js';
-import VREPlayer from 'videojs-react-enhanced';
+import { VREPlayer } from 'videojs-react-enhanced';
 import 'video.js/dist/video-js.css';
 
 function App() {
-  const playerOptions = {
-    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    controls: true, 
-    autoplay: "play",
-  };
-  const videojsOptions = {
-    fluid: true,
-  };
+    const playerOptions = {
+        src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        controls: true, 
+        autoplay: "play",
+    };
+    const videojsOptions = {
+        fluid: true,
+    };
 
-  return (
-    <VREPlayer
-      playerOptions={options}
-      videojsOptions={videojsOptions}
-      onReady={(player) => console.log(player)}
-      onPlay={(e, _, second) => console.log('Play!')}
-      onPause={(e, _, second) => console.log('Pause!')}
-      onEnded={(e, _) => console.log('Ended!')}
-    />
-  );
+    return (
+        <VREPlayer
+            playerOptions={options}
+            videojsOptions={videojsOptions}
+            onReady={(player) => console.log(player)}
+            onPlay={(e, _, second) => console.log('Play!')}
+            onPause={(e, _, second) => console.log('Pause!')}
+            onEnded={(e, _) => console.log('Ended!')}
+        />
+    );
 }
 
 export default App;
@@ -97,42 +97,42 @@ export default App;
 ```tsx
 import React from 'react';
 import videojs from 'video.js';
-import VREPlayer from 'videojs-react-enhanced';
+import VRE, { VREPlayer } from 'videojs-react-enhanced';
 import 'video.js/dist/video-js.css';
 
 function App(): JSX.Element {
-  const playerOptions: VREPlayer.IPlayerOptions = {
-    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    controls: true, 
-    autoplay: "play",
-  };
-  const videojsOptions: VREPlayer.IVideoJsOptions = {
-    fluid: true,
-  };
+    const playerOptions: VRE.IPlayerOptions = {
+        src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        controls: true, 
+        autoplay: "play",
+    };
+    const videojsOptions: VRE.IVideoJsOptions = {
+        fluid: true,
+    };
 
-  return (
-    <VREPlayer
-      playerOptions={options}
-      videojsOptions={videojsOptions}
-      onReady={(player) => console.log(player)}
-      onPlay={(e, _, second) => console.log('Play!')}
-      onPause={(e, _, second) => console.log('Pause!')}
-      onEnded={(e, _) => console.log('Ended!')}
-    />
-  );
+    return (
+        <VREPlayer
+            playerOptions={options}
+            videojsOptions={videojsOptions}
+            onReady={(player) => console.log(player)}
+            onPlay={(e, _, second) => console.log('Play!')}
+            onPause={(e, _, second) => console.log('Pause!')}
+            onEnded={(e, _) => console.log('Ended!')}
+        />
+    );
 }
 
 export default App;
 ```
 
-You can use TypeScript types from `videojs-react-enhanced` module.
+You can use import types from `videojs-react-enhanced` module as above.
 
 ### Props to initialize player
 Options to initizliae player are categorized depending on characterisics of each options. There are 4 different options to pass into `props`: `playerOptions`, `resources`, `videojsOptions`, `hideList`
 
 You can configure each options and pass it through `props` as you can see in the **Usage** section above. **Every option can be omitted** and default value will be placed in it.
 
-> NOTE: If you are using TypeScript in your project, you can utilize `Player.PlayerProps` type to get information of types you can use
+> NOTE: If you are using TypeScript in your project, you can refer to `VRE.IPlayerProps` type to get information of what kinds of props you can pass
 
 > NOTE: See all available options for `videojs` in [official documentation](https://docs.videojs.com/tutorial-options.html); Currently not every option is supported via this module. If you want other options to be supported which are not on the list below, please make an issue for it!
 
@@ -148,8 +148,9 @@ Options which are standard HTML5 `<video>` element attributes.
 |height|`number`|The content's height|The player's height|
 |loop|`boolean`|`false`|Whether the content will be played again when the playback ends|
 |muted|`boolean`|`false`|Whether the content's audio will be muted or not|
+|playsinline|`boolean`|`false`|Whether the content will play in non-fullscreen mode or not
 |preload|`'auto'`, `'metadata'`, `'none'`|`'auto'`|The way the content will be loaded.|
-|src|`string`|`""`|The content's URL to load|
+|src|`string`|`''`|The content's URL to load|
 |width|`number`|The content's width|The player's width|
 
 #### `resources`
@@ -162,15 +163,15 @@ In `poster` props, you can provide the URL for the content's poster image. This 
 ```js
 // example
 const resources = {
-  sources: [
-    {
-      src: 'http://url/to/source',
-      type: 'video/type'
-    },
-    // ...
-  ],
-  poster: 'http://url/to/poster/image'
-}
+    sources: [
+        {
+            src: 'http://url/to/source',
+            type: 'video/type',
+        },
+        // ...
+    ],
+    poster: 'http://url/to/poster/image',
+};
 ```
 
 #### `videojsOptions`
@@ -195,12 +196,12 @@ Videojs player displays several UI components as a default, and you can choose w
 ```js
 // example
 const hideList = [
-  'remainingTimeDisplay',
-  'playbackRateMenuButton',
+    'remainingTimeDisplay',
+    'playbackRateMenuButton',
 ]
 
-<Player
-  hideList={hideList}
+<VREPlayer
+    hideList={hideList}
 />
 ```
 
@@ -241,6 +242,15 @@ You can set custom event handlers for standard HTML5 Video events through `props
 
 #### `onPause`
 - Mapped event: `pause`
+- Callback arguments:
+    |No.|Arg. name|Arg. datatype|Description|
+    |---|---------|-------------|-----------|
+    |1|`event`|`EventTarget`|Information object describing the emitted event|
+    |2|`player`|`VideoJsPlayer`|Videojs `Player` object from which the event emitted|
+    |3|`currentTimeSecond`|`number`|The timestamp value when the event occured|
+
+#### `onPlaying`
+- Mapped event: `playing`
 - Callback arguments:
     |No.|Arg. name|Arg. datatype|Description|
     |---|---------|-------------|-----------|
@@ -302,7 +312,7 @@ You can set custom event handlers for standard HTML5 Video events through `props
     |2|`player`|`VideoJsPlayer`|Videojs `Player` object from which the event emitted|
 
 #### `onLoadedData`
-- Mapped event: `ended`
+- Mapped event: `loadedData`
 - Callback arguments:
     |No.|Arg. name|Arg. datatype|Description|
     |---|---------|-------------|-----------|
@@ -310,7 +320,7 @@ You can set custom event handlers for standard HTML5 Video events through `props
     |2|`player`|`VideoJsPlayer`|Videojs `Player` object from which the event emitted|
 
 #### `onLoadedMetadata`
-- Mapped event: `ended`
+- Mapped event: `loadedMetadata`
 - Callback arguments:
     |No.|Arg. name|Arg. datatype|Description|
     |---|---------|-------------|-----------|
@@ -324,27 +334,27 @@ You can apply any plugins and augment your player easily. You can simply list ov
 import React from 'react';
 import videojs from 'video.js';
 import '<PLUGIN_YOU_WANT_TO_USE>';
-import VREPlayer from 'videojs-react-enhanced';
+import { VREPlayer } from 'videojs-react-enhanced';
 
 function App() {
-  // ...
-  return (
-    <VREPlayer
-      // ...
-      videojsOptions={{
-        plugins: [
-          {
-            name: '<NAME_OF_PLUGIN>',
-            options: {
-              // ...
-            }
-          },
-          // ...
-        ]
-      }}
-      // ...
-    />
-  );
+    // ...
+    return (
+        <VREPlayer
+        // ...
+            videojsOptions={{
+                plugins: [
+                    {
+                        name: '<NAME_OF_PLUGIN>',
+                        options: {
+                            // ...
+                        },
+                    },
+                    // ...
+                ],
+            }}
+            // ...
+        />
+    );
 }
 
 export default App;
@@ -370,7 +380,7 @@ In some cases, a plugin registers itself on `video.js` module instance and makes
 import React from 'react';
 import videojs from 'video.js';
 import '<PLUGIN_YOU_WANT_TO_USE>';
-import VREPlayer from 'videojs-react-enhanced';
+import { VREPlayer } from 'videojs-react-enhanced';
 // codes to be continued...
 ```
 
@@ -383,27 +393,27 @@ All you have to do next is hand over an option object via `props` if needed:
 ```js
 // continues from the code right above:
 function App() {
-  // ...
+    // ...
 
-  const videojsOptions = {
-    plugins: [
-      {
-        name: '<NAME_OF_PLUGIN>',
-        options: {
-          // ...
-        },
-      },
-      // ...
-    ]
-  }
+    const videojsOptions = {
+        plugins: [
+            {
+                name: '<NAME_OF_PLUGIN>',
+                options: {
+                    // ...
+                },
+            },
+            // ...
+        ],
+    };
 
-  return (
-    <VREPlayer
-      // ...
-      videojsOptions={videojsOptions}
-      // ...
-    />
-  );
+    return (
+        <VREPlayer
+            // ...
+            videojsOptions={videojsOptions}
+            // ...
+        />
+    );
 }
 
 export default App;
@@ -420,32 +430,32 @@ On the other hand, if you provide plugin in the basic form of `function`, you ne
 ```js
 // continues from the code right above:
 function myPlugin(player, option) {
-  // your plugin's jobs to do...
+    // your plugin's jobs to do...
 };
 
 function App() {
-  // ...
+    // ...
 
-  const videojsOptions = {
-    plugins: [
-      {
-        name: 'myPlugin',
-        plugin: myPlugin,
-        options: {
-          // ...
-        },
-      },
-      // ...
-    ]
-  }
+    const videojsOptions = {
+        plugins: [
+            {
+                name: 'myPlugin',
+                plugin: myPlugin,
+                options: {
+                    // ...
+                },
+            },
+            // ...
+        ],
+    };
 
-  return (
-    <VREPlayer
-      // ...
-      videojsOptions={videojsOptions}
-      // ...
-    />
-  );
+    return (
+        <VREPlayer
+            // ...
+            videojsOptions={videojsOptions}
+            // ...
+        />
+    );
 }
 
 export default App;
