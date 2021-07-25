@@ -4,7 +4,7 @@ import VRE from '@/lib';
 // Initialize listeners of video.js events which are included in `props`
 function initializeEventListeners(
     player: VideoJsPlayer,
-    props: VRE.PlayerProps
+    props: VRE.IPlayerProps
 ): void {
     let currentTimeSecond: number = 0;
     let previousTimeSecond: number = 0;

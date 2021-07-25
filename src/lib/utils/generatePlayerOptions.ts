@@ -4,7 +4,7 @@ import videojs from 'video.js';
 import VRE from '@/lib';
 
 function generatePlayerOptions(
-    props: VRE.PlayerProps,
+    props: VRE.IPlayerProps,
     autoPlugins?: VRE.IIndexableObject
 ): videojs.PlayerOptions {
     const playerOptions: videojs.PlayerOptions = {

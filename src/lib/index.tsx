@@ -54,7 +54,7 @@ namespace VideojsReactEnhanced {
         options: object;
     }
 
-    export interface PlayerProps {
+    export interface IPlayerProps {
         playerOptions?: IPlayerOptions;
         resources?: IResources;
         videojsOptions?: IVideoJsOptions;
@@ -76,7 +76,7 @@ namespace VideojsReactEnhanced {
     }
 }
 
-export function VREPlayer(props: VideojsReactEnhanced.PlayerProps) {
+export function VREPlayer(props: VideojsReactEnhanced.IPlayerProps) {
     let playerRef: React.RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
     let player: VideojsReactEnhanced.IVideoJsPlayer;
     let autoPlugins: VideojsReactEnhanced.IIndexableObject | undefined;
