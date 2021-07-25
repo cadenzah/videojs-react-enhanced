@@ -42,7 +42,7 @@ describe(`Unit tests - Utility module functions`, () => {
         it(`Custom event listeners are properly registered`, () => {
             //given
             const on = sinon.spy(player, 'on');
-            const props: VRE.PlayerProps = {
+            const props: VRE.IPlayerProps = {
 
             };
 
@@ -57,7 +57,7 @@ describe(`Unit tests - Utility module functions`, () => {
         it(`Registered listeners are properly executed when an event emits`, () => {
             // given
             const counts: number[] = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
-            const props: VRE.PlayerProps = {
+            const props: VRE.IPlayerProps = {
                 onPlay: () => { counts[0]++ },
                 onPause: () => { counts[1]++ },
                 onWaiting: () => { counts[2]++ },
@@ -219,7 +219,7 @@ describe(`Unit tests - Utility module functions`, () => {
                 language: 'ko',
                 playbackRates: [0.5, 1.0, 1.5],
             };
-            const props: VRE.PlayerProps = {
+            const props: VRE.IPlayerProps = {
                 playerOptions,
                 videojsOptions,
                 onPlay: () => { },
