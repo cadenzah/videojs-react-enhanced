@@ -71,7 +71,7 @@ function App() {
 
   return (
     <VREPlayer
-      playerOptions={options}
+      playerOptions={playerOptions}
       videojsOptions={videojsOptions}
       onReady={(player) => console.log(player)}
       onPlay={(e, _, second) => console.log('Play!')}
@@ -108,7 +108,7 @@ function App(): JSX.Element {
 
   return (
     <VREPlayer
-      playerOptions={options}
+      playerOptions={playerOptions}
       videojsOptions={videojsOptions}
       onReady={(player) => console.log(player)}
       onPlay={(e, _, second) => console.log('Play!')}
